@@ -1,229 +1,412 @@
 # ngx-side-page
 
-`ngx-side-page` is a versatile Angular library for creating and managing side pages with ease. This library allows you to easily integrate side pages into your Angular applications. It is inspired by the dialog component in Angular Material.
+A versatile Angular library for creating and managing side pages (slide-out panels) with ease. This library provides a service-based approach to display components in slide-out panels with smooth animations, similar to Angular Material's dialog system but specifically designed for side panels.
 
-## Installation
+## Features
 
-To install the library, run:
+- 🚀 **Easy Integration** - Simple service-based API
+- 🎨 **Smooth Animations** - Built-in slide animations with RTL support
+- 📱 **Responsive Design** - Configurable width, min-width, and max-width
+- 🎯 **Flexible Positioning** - Support for both left (`start`) and right (`end`) positioning
+- 💾 **Data Passing** - Pass data to and from side page components
+- 🔄 **Event Handling** - Subscribe to open, close, and backdrop click events
+- ⚙️ **Global Configuration** - Set default options for all side pages
+- 🎭 **Custom Styling** - Customizable panel and backdrop classes
+- 🔒 **Prevent Close** - Optional disable close functionality
+- 🌍 **RTL Support** - Automatic RTL direction detection and animation adjustment
 
-```sh
+## Requirements
+
+- Angular 15.0.0 or higher
+- @angular/common 15.0.0 or higher
+- @angular/core 15.0.0 or higher
+
+## Setup
+
+### 1. Install the package
+
+```bash
 npm install ngx-side-page
 ```
 
-## Usage
+### 2. Configure animations (Required)
 
-### Injecting the Service
-
-To use the library, inject the `SidePageService` into your component:
+Add `provideAnimationsAsync()` to your application configuration:
 
 ```typescript
-import { Component } from '@angular/core';
-import { SidePageService } from 'ngx-side-page';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class AppComponent {
-  constructor(private sidePageService: SidePageService) {}
-
-  openSidePage() {
-    this.sidePageService.openSidePage('unique-key', YourComponent);
-  }
-
-  closeSidePage() {
-    this.sidePageService.closeLastSidePage();
-  }
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    // ... other providers
+    provideAnimationsAsync(), // Required for ngx-side-page animations
+    // ... other providers
+  ]
+};
 ```
 
-### API
+**Note:** The library uses Angular animations for smooth slide-in/slide-out effects. The `provideAnimationsAsync()` provider is required for proper functionality.
 
-#### SidePageService
+## Basic Usage
 
-##### Methods
-
-- `openSidePage(key: string, component: any, options?: SidePageOption): SidePageRef`
-  - Opens a side page with the specified key and component.
-  - **Parameters:**
-    - `key`: A unique key for the side page (That will help you to found it in the service if you need).
-    - `component`: The component to be displayed in the side page.
-    - `options`: Optional configuration options for the side page.
-  - **Returns:** a `SidePageRef` instance.
-
-
-- `closeLastSidePage(someValue?: any)`
-  - Closes the last opened side page.
-  - **Parameters:**
-    - `someValue`: Optional value to pass when closing the side page.
-
-
-- `closeSidePage(key: string, someValue?: any)`
-  - Closes the side page with the specified key.
-  - **Parameters:**
-    - `key`: The unique key of the side page to close.
-    - `someValue`: Optional value to pass when closing the side page.
-
-- `getSidePage()`
-  - Returns an observable of the current side pages.
-
-
-##### Options
-
-The `SidePageOption` interface provides the following configuration options:
-
-- `position?: 'end' | 'start'`
-- `disableClose?: boolean`
-- `showCloseBtn?: boolean`
-- `width?: string`
-- `maxWidth?: string`
-- `minWidth?: string`
-- `panelClass?: string`
-- `backdropClass?: string`
-- `hasBackdrop?: boolean`
-- `zIndex?: number`
-- `main_data?: any`
-
-#### SidePageRef
-
-The `SidePageRef` class provides methods to interact with the opened side page.
-
-##### Methods
-
-- `afterClosed(): Observable<any>`
-  - Returns an observable that emits when the side page is closed.
-
-- `afterOpened(): Observable<void>`
-  - Returns an observable that emits when the side page is opened.
-
-- `backdropClick(): Observable<MouseEvent>`
-  - Returns an observable that emits when the backdrop is clicked.
-
-- `beforeClosed(): Observable<any>`
-  - Returns an observable that emits before the side page is closed.
-
-- `getState()`
-  - Returns the current state of the side page.
-
-- `close(someValue: any): void`
-  - Closes the side page and optionally passes a value.
-
-### Injecting Data and Reference
-
-- `main_data`: This property is used to inject the main_data passed to the side page. It is of type `SidePageInfo<SidePageExampleComponent>`.
-- `ref`: This property is used to inject the reference to the side page. It is of type `SidePageRef<SidePageExampleComponent>`.
-
-### Examples
-
-Here is an example of how to use the `SidePageRef` class in your Angular component:
-
-```typescript
-import { Component } from '@angular/core';
-import { SidePageService, SidePageRef } from 'ngx-side-page';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class AppComponent {
-  private sidePageRef: SidePageRef;
-
-  constructor(private sidePageService: SidePageService) {}
-
-  openSidePage() {
-    this.sidePageRef = this.sidePageService.openSidePage('unique-key', YourComponent);
-
-    // Subscribe to afterClosed event
-    this.sidePageRef.afterClosed().subscribe(result => {
-      console.log('Side page closed with result:', result);
-    });
-
-    // Subscribe to afterOpened event
-    this.sidePageRef.afterOpened().subscribe(() => {
-      console.log('Side page opened');
-    });
-
-    // Subscribe to beforeClosed event
-    this.sidePageRef.beforeClosed().subscribe(result => {
-      console.log('Side page is about to close with result:', result);
-    });
-  }
-
-  closeSidePage() {
-    if (this.sidePageRef) {
-      this.sidePageRef.close('some value');
-    }
-  }
-}
-```
-
-Here is an example of how to use the `main_data` and `ref` properties in your Angular component:
+### 1. Import the Service
 
 ```typescript
 import { Component, inject } from '@angular/core';
-import { SidePageService, SidePageRef, SIDE_PAGE_DATA, SIDE_PAGE_REF, SidePageInfo } from 'ngx-side-page';
-
-@Component({
-  selector: 'app-side-page-example',
-  template: `<p>Data: {{ main_data.message }}</p>`
-})
-export class SidePageExampleComponent {
-  readonly main_data: SidePageInfo<SidePageExampleComponent> = inject(SIDE_PAGE_DATA);
-  readonly ref: SidePageRef<SidePageExampleComponent> = inject(SIDE_PAGE_REF);
-
-  constructor() {
-    console.log('Injected main_data:', this.main_data);
-    console.log('Injected ref:', this.ref);
-  }
-}
+import { SidePageService } from 'ngx-side-page';
+import { YourSidePageComponent } from './your-side-page.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+    <button (click)="openSidePage()">Open Side Page</button>
+  `
 })
 export class AppComponent {
-  private sidePageRef: SidePageRef<SidePageExampleComponent>;
-
-  constructor(private sidePageService: SidePageService) {}
+  private sidePageService = inject(SidePageService);
 
   openSidePage() {
-    const main_data = { message: 'Hello from AppComponent!' };
-    this.sidePageRef = this.sidePageService.openSidePage('unique-key', SidePageExampleComponent, { main_data });
+    const ref = this.sidePageService.openSidePage(
+      'unique-key', 
+      YourSidePageComponent,
+      {
+        width: '400px',
+        position: 'end',
+        data: { message: 'Hello from parent!' }
+      }
+    );
 
-    // Subscribe to afterClosed event
-    this.sidePageRef.afterClosed().subscribe(result => {
-      console.log('Side page closed with result:', result);
+    // Listen to close event
+    ref.afterClosed().subscribe(result => {
+      console.log('Side page closed with:', result);
     });
-
-    // Subscribe to afterOpened event
-    this.sidePageRef.afterOpened().subscribe(() => {
-      console.log('Side page opened');
-    });
-
-    // Subscribe to beforeClosed event
-    this.sidePageRef.beforeClosed().subscribe(result => {
-      console.log('Side page is about to close with result:', result);
-    });
-  }
-
-  closeSidePage() {
-    if (this.sidePageRef) {
-      this.sidePageRef.close('some value');
-    }
   }
 }
 ```
 
-In this example:
-- `openSidePage` method opens a side page and stores the `SidePageRef` instance.
-- Subscriptions to `afterClosed`, `afterOpened`, and `beforeClosed` events are set up to log messages when these events occur.
-- `closeSidePage` method closes the side page and optionally passes a value.
-- The `SidePageExampleComponent` uses the `main_data` and `ref` properties to access the injected main_data and reference.
-- The `AppComponent` demonstrates how to open and close the side page, passing main_data to it.
+### 2. Create Your Side Page Component
 
-## Further Help
+```typescript
+import { Component, inject, OnInit } from '@angular/core';
+import { SIDE_PAGE_DATA, SIDE_PAGE_REF, SidePageRef } from 'ngx-side-page';
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+@Component({
+  selector: 'app-your-side-page',
+  standalone: true,
+  template: `
+    <div class="p-4">
+      <h2>{{ data.message }}</h2>
+      <button (click)="close('result data')">Close</button>
+    </div>
+  `
+})
+export class YourSidePageComponent implements OnInit {
+  data = inject(SIDE_PAGE_DATA);
+  ref = inject(SIDE_PAGE_REF);
+
+  ngOnInit() {
+    console.log('Received data:', this.data);
+  }
+
+  close(result?: any) {
+    this.ref.close(result);
+  }
+}
+```
+
+## Configuration Options
+
+### SidePageOption Interface
+
+```typescript
+interface SidePageOption {
+  key?: string;                    // Unique identifier
+  position?: 'end' | 'start';      // Panel position (end = right, start = left)
+  disableClose?: boolean;          // Prevent closing on backdrop click
+  showCloseBtn?: boolean;          // Show/hide close button
+  width?: string;                  // Panel width
+  maxWidth?: string;               // Maximum width
+  minWidth?: string;               // Minimum width
+  panelClass?: string;             // Custom CSS class for panel
+  backdropClass?: string;          // Custom CSS class for backdrop
+  hasBackdrop?: boolean;           // Show/hide backdrop
+  zIndex?: number;                 // Z-index for layering
+  data?: any;                      // Data to pass to component
+}
+```
+
+### Global Configuration
+
+Configure default options for all side pages:
+
+```typescript
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideSidePageConfig } from 'ngx-side-page';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideSidePageConfig({
+      width: '500px',
+      maxWidth: '90vw',
+      minWidth: '300px',
+      position: 'end',
+      disableClose: false
+    }),
+    // ... other providers
+  ]
+});
+```
+
+## Advanced Usage Examples
+
+### Left-Side Panel
+
+```typescript
+openLeftPanel() {
+  const ref = this.sidePageService.openSidePage('left-panel', MyComponent, {
+    position: 'start',  // Opens from left side
+    width: '350px',
+    maxWidth: '80vw'
+  });
+}
+```
+
+### Prevent Closing
+
+```typescript
+openNonClosablePanel() {
+  const ref = this.sidePageService.openSidePage('secure-panel', MyComponent, {
+    disableClose: true,    // Prevents backdrop click close
+    showCloseBtn: false,   // Hides close button
+    data: { readonly: true }
+  });
+}
+```
+
+### Custom Styling
+
+```typescript
+openStyledPanel() {
+  const ref = this.sidePageService.openSidePage('styled-panel', MyComponent, {
+    panelClass: 'my-custom-panel',
+    backdropClass: 'my-custom-backdrop',
+    zIndex: 2000
+  });
+}
+```
+
+```css
+/* Custom styles */
+.my-custom-panel {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px 0 0 8px;
+}
+
+.my-custom-backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+```
+
+### Complex Data Passing
+
+```typescript
+openDataPanel() {
+  const complexData = {
+    user: { id: 123, name: 'John Doe' },
+    settings: { theme: 'dark', lang: 'en' },
+    items: [1, 2, 3, 4, 5]
+  };
+
+  const ref = this.sidePageService.openSidePage('data-panel', MyComponent, {
+    data: complexData,
+    width: '600px'
+  });
+
+  // Handle result
+  ref.afterClosed().subscribe(result => {
+    if (result) {
+      console.log('User submitted:', result);
+      // Handle the returned data
+    }
+  });
+}
+```
+
+## API Reference
+
+### SidePageService
+
+#### Methods
+
+- **`openSidePage<T>(key: string, component: T, options?: SidePageOption): SidePageRef<T>`**
+  - Opens a new side page with the specified component
+  - Returns a reference to control the side page
+
+- **`closeSidePage(key: string, value?: any): void`**
+  - Closes a specific side page by its key
+
+- **`closeLastSidePage(value?: any): void`**
+  - Closes the most recently opened side page
+
+- **`getSidePage(): Observable<SidePageInfo[]>`**
+  - Returns an observable of all currently open side pages
+
+### SidePageRef
+
+#### Properties
+
+- **`key: string`** - Unique identifier of the side page
+- **`componentInstance: T`** - Reference to the component instance
+- **`options: SidePageOption`** - Configuration options used
+- **`openedSidePages: SidePageInfo[]`** - Array of all open side pages
+
+#### Methods
+
+- **`close(value?: any): void`** - Closes this side page
+- **`afterClosed(): Observable<any>`** - Emits when side page closes
+- **`afterOpened(): Observable<void>`** - Emits when side page opens
+- **`beforeClosed(): Observable<any>`** - Emits before side page closes
+- **`getState(): boolean`** - Returns current open/closed state
+
+### Injection Tokens
+
+- **`SIDE_PAGE_DATA`** - Inject data passed to the side page component
+- **`SIDE_PAGE_REF`** - Inject reference to control the side page
+- **`SIDE_PAGE_CONFIG`** - Inject global configuration
+
+## Form Example
+
+Here's a complete example of using a form in a side page:
+
+```typescript
+// Parent Component
+openContactForm() {
+  const ref = this.sidePageService.openSidePage('contact-form', ContactFormComponent, {
+    width: '400px',
+    maxWidth: '95vw',
+    data: { 
+      title: 'Contact Us',
+      prefillData: { name: 'John', email: 'john@example.com' }
+    }
+  });
+
+  ref.afterClosed().subscribe(formData => {
+    if (formData) {
+      console.log('Form submitted:', formData);
+      this.saveContactForm(formData);
+    }
+  });
+}
+
+// Contact Form Component
+@Component({
+  selector: 'app-contact-form',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
+  template: `
+    <div class="p-6">
+      <h2 class="text-xl font-bold mb-4">{{ data.title }}</h2>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label class="block mb-2">Name</label>
+          <input formControlName="name" class="w-full p-2 border rounded">
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2">Email</label>
+          <input formControlName="email" type="email" class="w-full p-2 border rounded">
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2">Message</label>
+          <textarea formControlName="message" class="w-full p-2 border rounded h-24"></textarea>
+        </div>
+        <div class="flex gap-2">
+          <button type="submit" [disabled]="contactForm.invalid" 
+                  class="px-4 py-2 bg-blue-500 text-white rounded">
+            Submit
+          </button>
+          <button type="button" (click)="cancel()" 
+                  class="px-4 py-2 bg-gray-500 text-white rounded">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  `
+})
+export class ContactFormComponent implements OnInit {
+  data = inject(SIDE_PAGE_DATA);
+  ref = inject(SIDE_PAGE_REF);
+  
+  contactForm = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    message: ['', Validators.required]
+  });
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    // Prefill form if data provided
+    if (this.data.prefillData) {
+      this.contactForm.patchValue(this.data.prefillData);
+    }
+  }
+
+  onSubmit() {
+    if (this.contactForm.valid) {
+      this.ref.close(this.contactForm.value);
+    }
+  }
+
+  cancel() {
+    this.ref.close(null);
+  }
+}
+```
+
+## Styling and Theming
+
+The library uses minimal CSS and relies on CSS classes for positioning and animations. You can customize the appearance using:
+
+### Default Classes
+
+- `.overlay` - Backdrop overlay
+- `.fixed`, `.top-0`, `.bottom-0` - Panel positioning
+- `.bg-white`, `.shadow-lg` - Panel styling
+
+### Custom CSS Variables
+
+```css
+:root {
+  --side-page-backdrop-color: rgba(0, 0, 0, 0.5);
+  --side-page-animation-duration: 300ms;
+  --side-page-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+```
+
+## RTL Support
+
+The library automatically detects RTL direction from `document.documentElement` computed styles and adjusts animations accordingly. No additional configuration is required.
+
+## Browser Support
+
+- Chrome/Edge (latest)
+- Firefox (latest) 
+- Safari (latest)
+- IE 11+ (with polyfills)
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines and submit pull requests to our GitHub repository.
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Author
+
+Created by **Hazem Safwat**
+
+---
+
+For more examples and advanced usage, check out the demo application included in this repository.
