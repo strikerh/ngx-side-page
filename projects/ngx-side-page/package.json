@@ -1,6 +1,6 @@
 {
   "name": "ngx-side-page",
-  "version": "18.0.60",
+  "version": "18.0.64",
   "description": "A versatile Angular library for creating and managing side pages with ease.",
   "scripts": {
     "publish-sidePage": "ng build ngx-side-page && cd ../../dist/ngx-side-page && npm publish",

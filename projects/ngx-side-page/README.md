@@ -83,7 +83,7 @@ The `SidePageOption` interface provides the following configuration options:
 - `backdropClass?: string`
 - `hasBackdrop?: boolean`
 - `zIndex?: number`
-- `data?: any`
+- `main_data?: any`
 
 #### SidePageRef
 
@@ -111,7 +111,7 @@ The `SidePageRef` class provides methods to interact with the opened side page.
 
 ### Injecting Data and Reference
 
-- `data`: This property is used to inject the data passed to the side page. It is of type `SidePageInfo<SidePageExampleComponent>`.
+- `main_data`: This property is used to inject the main_data passed to the side page. It is of type `SidePageInfo<SidePageExampleComponent>`.
 - `ref`: This property is used to inject the reference to the side page. It is of type `SidePageRef<SidePageExampleComponent>`.
 
 ### Examples
@@ -159,7 +159,7 @@ export class AppComponent {
 }
 ```
 
-Here is an example of how to use the `data` and `ref` properties in your Angular component:
+Here is an example of how to use the `main_data` and `ref` properties in your Angular component:
 
 ```typescript
 import { Component, inject } from '@angular/core';
@@ -167,14 +167,14 @@ import { SidePageService, SidePageRef, SIDE_PAGE_DATA, SIDE_PAGE_REF, SidePageIn
 
 @Component({
   selector: 'app-side-page-example',
-  template: `<p>Data: {{ data.message }}</p>`
+  template: `<p>Data: {{ main_data.message }}</p>`
 })
 export class SidePageExampleComponent {
-  readonly data: SidePageInfo<SidePageExampleComponent> = inject(SIDE_PAGE_DATA);
+  readonly main_data: SidePageInfo<SidePageExampleComponent> = inject(SIDE_PAGE_DATA);
   readonly ref: SidePageRef<SidePageExampleComponent> = inject(SIDE_PAGE_REF);
 
   constructor() {
-    console.log('Injected data:', this.data);
+    console.log('Injected main_data:', this.main_data);
     console.log('Injected ref:', this.ref);
   }
 }
@@ -190,8 +190,8 @@ export class AppComponent {
   constructor(private sidePageService: SidePageService) {}
 
   openSidePage() {
-    const data = { message: 'Hello from AppComponent!' };
-    this.sidePageRef = this.sidePageService.openSidePage('unique-key', SidePageExampleComponent, { data });
+    const main_data = { message: 'Hello from AppComponent!' };
+    this.sidePageRef = this.sidePageService.openSidePage('unique-key', SidePageExampleComponent, { main_data });
 
     // Subscribe to afterClosed event
     this.sidePageRef.afterClosed().subscribe(result => {
@@ -221,8 +221,8 @@ In this example:
 - `openSidePage` method opens a side page and stores the `SidePageRef` instance.
 - Subscriptions to `afterClosed`, `afterOpened`, and `beforeClosed` events are set up to log messages when these events occur.
 - `closeSidePage` method closes the side page and optionally passes a value.
-- The `SidePageExampleComponent` uses the `data` and `ref` properties to access the injected data and reference.
-- The `AppComponent` demonstrates how to open and close the side page, passing data to it.
+- The `SidePageExampleComponent` uses the `main_data` and `ref` properties to access the injected main_data and reference.
+- The `AppComponent` demonstrates how to open and close the side page, passing main_data to it.
 
 ## Further Help
 

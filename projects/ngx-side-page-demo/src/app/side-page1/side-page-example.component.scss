@@ -1,0 +1,485 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow-y: auto ;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.side-page-content {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-page-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+
+  h2 {
+    font-size: 1.8rem;
+    margin: 0 0 10px;
+    color: #4a6cf7;
+  }
+
+  .description {
+    color: #666;
+    margin: 0;
+  }
+}
+
+.side-page-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.demo-section {
+  margin-bottom: 30px;
+
+  p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  code {
+    background-color: #f4f4f4;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+  }
+}
+
+.code-example {
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  margin: 15px 0;
+  padding: 15px;
+
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+
+    code {
+      background: none;
+      padding: 0;
+      font-family: 'Courier New', Courier, monospace;
+      color: #333;
+    }
+  }
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  text-decoration: none;
+  font-family: inherit;
+
+  &:hover {
+    background-color: #3a5cd7;
+    transform: translateY(-2px);
+  }
+
+  &.close-btn {
+    background-color: #f44336;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+
+  &.cancel-btn {
+    background-color: #9e9e9e;
+
+    &:hover {
+      background-color: #757575;
+    }
+  }
+
+  &.submit-btn {
+    background-color: #4caf50;
+
+    &:hover {
+      background-color: #388e3c;
+    }
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+// Data display styling
+.data-display {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 15px 0;
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #4a6cf7;
+  }
+
+  .data-section {
+    margin-bottom: 15px;
+
+    h4 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+  }
+}
+
+// Form styling
+.contact-form {
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: #4a6cf7;
+      }
+
+      &.invalid {
+        border-color: #f44336;
+      }
+    }
+
+    .error-message {
+      color: #f44336;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+}
+
+// Product details styling
+.product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  .product-image {
+    flex: 0 0 40%;
+
+    img {
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
+
+  .product-info {
+    flex: 1;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
+
+    .product-price {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #4a6cf7;
+      margin-bottom: 15px;
+    }
+
+    .product-description {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    h4 {
+      margin-bottom: 10px;
+    }
+
+    .product-features {
+      margin-top: 0;
+      margin-bottom: 20px;
+      padding-left: 20px;
+
+      li {
+        margin-bottom: 5px;
+      }
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .buy-btn {
+      background-color: #4caf50;
+
+      &:hover {
+        background-color: #388e3c;
+      }
+    }
+  }
+}
+
+// Wizard styling
+.wizard {
+  .wizard-progress {
+    margin-bottom: 30px;
+
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        text-align: center;
+        position: relative;
+
+        &:not(:last-child):after {
+          content: '';
+          position: absolute;
+          top: 15px;
+          left: 60%;
+          width: 80%;
+          height: 2px;
+          background-color: #ddd;
+          z-index: 0;
+        }
+
+        &.active .step-number {
+          background-color: #4a6cf7;
+          color: white;
+        }
+
+        &.completed .step-number {
+          background-color: #4caf50;
+          color: white;
+        }
+
+        .step-number {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: #f5f5f5;
+          border: 2px solid #ddd;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          margin-bottom: 5px;
+          z-index: 1;
+          position: relative;
+        }
+
+        .step-title {
+          font-size: 0.9rem;
+          color: #666;
+        }
+      }
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      overflow: hidden;
+
+      .progress {
+        height: 100%;
+        background-color: #4a6cf7;
+        transition: width 0.3s;
+      }
+    }
+  }
+
+  .wizard-content {
+    margin-bottom: 30px;
+
+    .wizard-step {
+      h3 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #4a6cf7;
+      }
+    }
+
+    // Package options
+    .package-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+
+      .package-option {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        transition: transform 0.3s, box-shadow 0.3s;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        &.recommended {
+          border-color: #4a6cf7;
+          box-shadow: 0 5px 15px rgba(74, 108, 247, 0.1);
+
+          .badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4a6cf7;
+            color: white;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+          }
+        }
+
+        h4 {
+          margin-top: 0;
+          font-size: 1.3rem;
+        }
+
+        .price {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #4a6cf7;
+          margin-bottom: 15px;
+        }
+
+        ul {
+          text-align: left;
+          margin-bottom: 20px;
+          padding-left: 20px;
+
+          li {
+            margin-bottom: 5px;
+          }
+        }
+
+        .select-btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .wizard-actions {
+    display: flex;
+    justify-content: space-between;
+
+    .back-btn {
+      background-color: #9e9e9e;
+
+      &:hover {
+        background-color: #757575;
+      }
+    }
+
+    .next-btn {
+      background-color: #4a6cf7;
+    }
+
+    .finish-btn {
+      background-color: #4caf50;
+
+      &:hover {
+        background-color: #388e3c;
+      }
+    }
+  }
+
+  // Confirmation
+  .confirmation {
+    text-align: center;
+    padding: 30px 0;
+
+    .confirmation-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #4caf50;
+      color: white;
+      font-size: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    h4 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Form row layout
+.form-row {
+  display: flex;
+  gap: 15px;
+
+  .form-group.half {
+    flex: 1;
+  }
+}

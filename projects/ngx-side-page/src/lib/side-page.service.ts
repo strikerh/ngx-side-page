@@ -1,11 +1,5 @@
-import {
-  ApplicationRef,
-  ComponentRef,
-  createComponent, Inject,
-  Injectable,
-  Injector, Optional
-} from '@angular/core';
-import {BehaviorSubject, filter, map, Observable, Subject} from "rxjs";
+import {ApplicationRef, ComponentRef, createComponent, Inject, Injectable, Optional} from '@angular/core';
+import {BehaviorSubject, filter, map, Observable, Subject, take} from "rxjs";
 import {SidePageComponent} from "./side-page.component";
 import {SIDE_PAGE_CONFIG} from "./side-page-config.token";
 
@@ -37,25 +31,25 @@ export interface SidePageConfig {
 
 
 export interface SidePageInfo<T = any> {
-  key: string,
-  component: T,
-  options: SidePageOption,
-  state: boolean,
+  key: string;
+  component: T;
+  options: SidePageOption;
+  state: boolean;
   data?: any;
   ref?: SidePageRef<T>;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SidePageService {
 
   sidePages: SidePageInfo[] = [];
+  initiated: boolean = false;
   private sidePages$ = new BehaviorSubject<SidePageInfo[]>([]);
   private startClosing$ = new Subject<any>();
   private endClosing$ = new Subject<any>();
   private endOpening$ = new Subject<any>();
-  initiated: boolean = false;
   private options: SidePageOption = {
     position: 'end',
     width: '100%',
@@ -74,12 +68,22 @@ export class SidePageService {
   ) {
     this.config = config || {};
 
+    this.sidePages$.subscribe((pages) => {
+      if (pages.length) {
+        // Add overflow: hidden to body when any side page is open
+        document.body.style.overflow = 'hidden';
+      } else {
+        // Remove overflow: hidden when all side pages are closed
+        document.body.style.overflow = '';
+      }
+    });
+
   }
 
 
   addComponentToBody() {
     const componentRef: ComponentRef<SidePageComponent> = createComponent(SidePageComponent, {
-      environmentInjector: this.appRef.injector
+      environmentInjector: this.appRef.injector,
     });
 
     // Set the inputs
@@ -105,25 +109,26 @@ export class SidePageService {
   closeLastSidePage(someValue: any = null) {
     const sp = this.sidePages[this.sidePages.length - 1];
     this.startClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-    this.startClosing$.complete();
+    // this.startClosing$.complete();
     this.sidePages.pop();
+    this.sidePages$.next(this.sidePages);
     setTimeout(() => {
       this.endClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-      this.endClosing$.complete();
+      // this.endClosing$.complete();
     }, 300);
   }
 
   closeSidePage(key: string, someValue: any) {
-    const sp = this.sidePages.find(sp1 => sp1.key === key);
+    const sp = this.sidePages.find((sp1) => sp1.key === key);
     if (!sp) {
       return;
     }
     this.startClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-    this.startClosing$.complete();
+    // this.startClosing$.complete();
     this.sidePages.pop();
     setTimeout(() => {
       this.endClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-      this.endClosing$.complete();
+      // this.endClosing$.complete();
     }, 300);
   }
 
@@ -137,14 +142,13 @@ export class SidePageService {
     const spRef = new SidePageRef<T>(thisSp, this.sidePages, this.endOpening$, this.startClosing$, this.endClosing$, this);
     this.sidePages.push({...thisSp, ref: spRef});
     this.sidePages$.next(this.sidePages);
-    this.sidePages$.complete();
+    // this.sidePages$.complete();
     setTimeout(() => {
       this.endOpening$.next(thisSp);
-      this.endOpening$.complete();
+      // this.endOpening$.complete();
     }, 300);
 
-    return spRef
-
+    return spRef;
   }
 
 
@@ -181,6 +185,7 @@ export class SidePageRef<T> {
   afterClosed(): Observable<any> {
     return this._endClosing$.asObservable().pipe(
       filter((value) => value.key === this._sidePage.key),
+      take(1),
       map((value) => value.value)
     );
   }

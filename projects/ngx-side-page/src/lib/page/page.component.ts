@@ -59,6 +59,7 @@ export class PageComponent implements OnInit {
     this.sidePageService.closeLastSidePage();
     setTimeout(() => {
       this.contentContainer.clear();
+
     }, 300);
     this.close.emit(this.sidePage);
   }
