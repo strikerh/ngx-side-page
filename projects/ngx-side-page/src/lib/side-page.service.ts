@@ -118,14 +118,16 @@ export class SidePageService {
     }, 300);
   }
 
-  closeSidePage(key: string, someValue: any) {
-    const sp = this.sidePages.find((sp1) => sp1.key === key);
-    if (!sp) {
+  closeSidePage(key: string, someValue: any = null) {
+    const spIndex = this.sidePages.findIndex((sp1) => sp1.key === key);
+    if (spIndex === -1) {
       return;
     }
+    const sp = this.sidePages[spIndex];
     this.startClosing$.next({key: sp.key, sidePage: sp, value: someValue});
     // this.startClosing$.complete();
-    this.sidePages.pop();
+    this.sidePages.splice(spIndex, 1);
+    this.sidePages$.next(this.sidePages);
     setTimeout(() => {
       this.endClosing$.next({key: sp.key, sidePage: sp, value: someValue});
       // this.endClosing$.complete();
