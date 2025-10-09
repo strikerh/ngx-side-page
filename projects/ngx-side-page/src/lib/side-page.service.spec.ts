@@ -1,47 +1,89 @@
-import {fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ApplicationRef} from '@angular/core';
+import {fakeAsync, tick} from '@angular/core/testing';
+import {BehaviorSubject} from 'rxjs';
 
-import {SidePageInfo, SidePageService} from './side-page.service';
+import {SidePageService} from './side-page.service';
+
+class MockApplicationRef implements Partial<ApplicationRef> {
+  injector = {} as any;
+  viewCount = 0;
+  componentTypes: any[] = [];
+  components: any[] = [];
+  isStable = new BehaviorSubject(true).asObservable();
+
+  attachView(): void {}
+
+  detachView(): void {}
+
+  tick(): void {}
+
+  whenStable(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  destroy(): void {}
+
+  get destroyed(): boolean {
+    return false;
+  }
+}
 
 describe('SidePageService', () => {
   let service: SidePageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(SidePageService);
+    service = new SidePageService(new MockApplicationRef() as unknown as ApplicationRef, undefined as any);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should close a non-topmost side page and emit the correct events', fakeAsync(() => {
-    const startClosingEvents: any[] = [];
-    const endClosingEvents: any[] = [];
-    const sidePageEmissions: SidePageInfo[][] = [];
+  it('closes a non-topmost side page without affecting newer pages', fakeAsync(() => {
+    service['initiated'] = true;
 
-    (service as any).startClosing$.subscribe((event: any) => startClosingEvents.push(event));
-    (service as any).endClosing$.subscribe((event: any) => endClosingEvents.push(event));
-    service.getSidePage().subscribe((pages) => sidePageEmissions.push(pages));
+    const emissions: string[][] = [];
+    const subscription = service.getSidePage().subscribe((pages) => {
+      emissions.push(pages.map((page) => page.key));
+    });
 
-    const firstSidePage: SidePageInfo = {key: 'first', component: {} as any, options: {} as any, state: true};
-    const secondSidePage: SidePageInfo = {key: 'second', component: {} as any, options: {} as any, state: true};
+    const firstRef = service.openSidePage('first', {} as any);
+    service.openSidePage('second', {} as any);
 
-    (service as any).sidePages = [firstSidePage, secondSidePage];
-    (service as any).sidePages$.next((service as any).sidePages);
+    expect(service.sidePages.map((page) => page.key)).toEqual(['first', 'second']);
 
-    service.closeSidePage('first', 'value');
+    let closedValue: any = undefined;
+    firstRef.afterClosed().subscribe((value) => (closedValue = value));
 
-    expect(startClosingEvents.length).toBe(1);
-    expect(startClosingEvents[0]).toEqual(jasmine.objectContaining({key: 'first', value: 'value', sidePage: firstSidePage}));
+    service.closeSidePage('first', 'background close');
 
-    expect((service as any).sidePages.length).toBe(1);
-    expect(((service as any).sidePages[0] as SidePageInfo).key).toBe('second');
-    const lastEmission = sidePageEmissions[sidePageEmissions.length - 1];
-    expect(lastEmission.map((page) => page.key)).toEqual(['second']);
+    expect(service.sidePages.map((page) => page.key)).toEqual(['second']);
+    expect(emissions[emissions.length - 1]).toEqual(['second']);
 
     tick(300);
 
-    expect(endClosingEvents.length).toBe(1);
-    expect(endClosingEvents[0]).toEqual(jasmine.objectContaining({key: 'first', value: 'value', sidePage: firstSidePage}));
+    expect(closedValue).toBe('background close');
+
+    subscription.unsubscribe();
+  }));
+
+  it('ignores requests to close unknown side pages', fakeAsync(() => {
+    service['initiated'] = true;
+
+    const emissions: string[][] = [];
+    const subscription = service.getSidePage().subscribe((pages) => {
+      emissions.push(pages.map((page) => page.key));
+    });
+
+    service.openSidePage('first', {} as any);
+
+    service.closeSidePage('missing', 'value');
+
+    expect(service.sidePages.map((page) => page.key)).toEqual(['first']);
+    expect(emissions[emissions.length - 1]).toEqual(['first']);
+
+    tick(300);
+
+    subscription.unsubscribe();
   }));
 });

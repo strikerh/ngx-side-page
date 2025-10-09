@@ -107,30 +107,36 @@ export class SidePageService {
   }
 
   closeLastSidePage(someValue: any = null) {
-    const sp = this.sidePages[this.sidePages.length - 1];
-    this.startClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-    // this.startClosing$.complete();
-    this.sidePages.pop();
-    this.sidePages$.next(this.sidePages);
-    setTimeout(() => {
-      this.endClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-      // this.endClosing$.complete();
-    }, 300);
-  }
-
-  closeSidePage(key: string, someValue: any = null) {
-    const spIndex = this.sidePages.findIndex((sp1) => sp1.key === key);
-    if (spIndex === -1) {
+    if (!this.sidePages.length) {
       return;
     }
-    const sp = this.sidePages[spIndex];
+
+    this.closeSidePageAtIndex(this.sidePages.length - 1, someValue);
+  }
+
+  closeSidePage(key: string, someValue: any) {
+    const index = this.sidePages.findIndex((sp1) => sp1.key === key);
+    if (index === -1) {
+      return;
+    }
+
+    this.closeSidePageAtIndex(index, someValue);
+  }
+
+  private closeSidePageAtIndex(index: number, someValue: any) {
+    const sp = this.sidePages[index];
+
+    if (!sp) {
+      return;
+    }
+
     this.startClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-    // this.startClosing$.complete();
-    this.sidePages.splice(spIndex, 1);
+
+    this.sidePages.splice(index, 1);
     this.sidePages$.next(this.sidePages);
+
     setTimeout(() => {
       this.endClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-      // this.endClosing$.complete();
     }, 300);
   }
 
