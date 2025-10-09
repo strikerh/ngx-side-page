@@ -2,10 +2,11 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 
 export const animations = () =>
 {
-  const computedStyle = window.getComputedStyle(document.documentElement).direction;
+  const hasDom = typeof window !== 'undefined' && typeof document !== 'undefined';
+  const canReadDirection = hasDom && typeof window.getComputedStyle === 'function' && !!document.documentElement;
+  const direction = canReadDirection ? window.getComputedStyle(document.documentElement).direction : 'ltr';
 
-  // const direction = document.documentElement.getAttribute('dir') || document.body.getAttribute('dir') || 'ltr';
-  const isRtl = computedStyle === 'rtl';
+  const isRtl = direction === 'rtl';
   const val1 =isRtl?  ['-100%', '0%']: ['100%', '0%'];
   const val2 =isRtl?   ['100%', '0%']: ['-100%', '0%'];
   return   [
