@@ -9,8 +9,8 @@ describe('SidePageComponent', () => {
     const serviceMock = {
       initiated: false,
       getSidePage: () => pages$.asObservable(),
-      closeSidePage: jasmine.createSpy('closeSidePage'),
-    } as Pick<SidePageService, 'getSidePage' | 'closeSidePage'> & {initiated: boolean};
+      closeLastSidePage: jasmine.createSpy('closeLastSidePage'),
+    } as Pick<SidePageService, 'getSidePage' | 'closeLastSidePage'> & {initiated: boolean};
 
     const component = new SidePageComponent(serviceMock as SidePageService);
 

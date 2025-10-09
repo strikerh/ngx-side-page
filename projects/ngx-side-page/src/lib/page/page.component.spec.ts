@@ -6,7 +6,7 @@ import {SidePageService} from '../side-page.service';
 describe('PageComponent', () => {
   it('should create', () => {
     const serviceMock = {
-      closeSidePage: jasmine.createSpy('closeSidePage'),
+      closeLastSidePage: jasmine.createSpy('closeLastSidePage'),
     } as Partial<SidePageService> as SidePageService;
 
     const component = new PageComponent(serviceMock, {} as Injector);

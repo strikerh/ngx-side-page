@@ -122,7 +122,7 @@ export class SidePageService {
     this.closeSidePageAtIndex(this.sidePages.length - 1, someValue);
   }
 
-  closeSidePage(key: string, someValue: any = null) {
+  closeSidePage(key: string, someValue: any) {
     const index = this.sidePages.findIndex((sp1) => sp1.key === key);
     if (index === -1) {
       return;
