@@ -43,7 +43,7 @@ export class SidePageComponent implements OnInit {
     if (sidePage.options.disableClose)
       return;
     if (this.sidePageService)
-      this.sidePageService.closeLastSidePage(value);
+      this.sidePageService.closeSidePage(sidePage.key, value);
 
   }
 

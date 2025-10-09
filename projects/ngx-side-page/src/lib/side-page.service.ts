@@ -69,6 +69,10 @@ export class SidePageService {
     this.config = config || {};
 
     this.sidePages$.subscribe((pages) => {
+      if (!this.isBrowser()) {
+        return;
+      }
+
       if (pages.length) {
         // Add overflow: hidden to body when any side page is open
         document.body.style.overflow = 'hidden';
@@ -82,6 +86,10 @@ export class SidePageService {
 
 
   addComponentToBody() {
+    if (!this.isBrowser()) {
+      return;
+    }
+
     const componentRef: ComponentRef<SidePageComponent> = createComponent(SidePageComponent, {
       environmentInjector: this.appRef.injector,
     });
@@ -159,6 +167,10 @@ export class SidePageService {
     return spRef;
   }
 
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof document !== 'undefined';
+  }
+
 
 }
 
@@ -222,7 +234,7 @@ export class SidePageRef<T> {
   }
 
   close(someValue?: any): void {
-    this._sidePageService.closeLastSidePage(someValue);
+    this._sidePageService.closeSidePage(this._sidePage.key, someValue);
 
   }
 }

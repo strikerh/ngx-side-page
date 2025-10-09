@@ -56,7 +56,7 @@ export class PageComponent implements OnInit {
 
   closeClicked() {
     this._isOpen = false;
-    this.sidePageService.closeLastSidePage();
+    this.sidePageService.closeSidePage(this._key);
     setTimeout(() => {
       this.contentContainer.clear();
 
