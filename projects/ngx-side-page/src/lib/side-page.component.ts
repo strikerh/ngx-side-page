@@ -15,7 +15,7 @@ import {PageComponent} from "./page/page.component";
     PageComponent
   ],
   templateUrl: './side-page.component.html',
-  styleUrl: './side-page.component.scss',
+  styleUrls: ['./side-page.component.scss'],
   animations: animations(),
 
 })
