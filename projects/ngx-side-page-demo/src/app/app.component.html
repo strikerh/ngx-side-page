@@ -17,104 +17,340 @@
   <section class="hero">
     <div class="container">
       <div class="hero-content">
-        <h1>A Flexible Side Page Component for Angular</h1>
-        <p>Create beautiful sliding side panels with ease. Perfect for forms, details views, and more.</p>
-        <div class="cta-buttons">
-          <button class="btn primary" (click)="openSidePage()">Try Demo</button>
-          <a href="#documentation" class="btn secondary">Get Started</a>
+        <div class="hero-text">
+          <span class="hero-badge">Angular 19+ Compatible</span>
+          <h1>ngx-side-page</h1>
+          <p class="hero-subtitle">A modern, flexible side panel component for Angular applications</p>
+          <p class="hero-description">Create beautiful sliding panels for forms, detail views, notifications, and more. 
+            Full RTL support, customizable animations, and TypeScript-first design.</p>
+          
+          <div class="hero-install">
+            <div class="install-command">
+              <code>npm install ngx-side-page</code>
+              <button class="copy-btn" (click)="copyToClipboard('npm install ngx-side-page')" title="Copy to clipboard">
+                📋
+              </button>
+            </div>
+          </div>
+
+          <div class="cta-buttons">
+            <button class="btn primary large" (click)="openSidePage()">
+              <span>🚀 Try Live Demo</span>
+            </button>
+            <a href="#playground" class="btn secondary large">
+              <span>🎮 Open Playground</span>
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>10+</strong>
+              <span>Configuration Options</span>
+            </div>
+            <div class="stat">
+              <strong>RTL</strong>
+              <span>Fully Supported</span>
+            </div>
+            <div class="stat">
+              <strong>TypeScript</strong>
+              <span>First-Class Support</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-demo">
+          <div class="demo-preview">
+            <div class="demo-window">
+              <div class="window-header">
+                <div class="window-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <span class="window-title">Live Preview</span>
+              </div>
+              <div class="window-content">
+                <div class="demo-buttons">
+                  <button class="demo-btn" (click)="openSidePage()">Open Panel →</button>
+                  <button class="demo-btn" (click)="openSidePageStart()">← Open Panel</button>
+                </div>
+                <div class="feature-highlights">
+                  <div class="highlight">✨ Smooth Animations</div>
+                  <div class="highlight">🎨 Customizable Styling</div>
+                  <div class="highlight">📱 Responsive Design</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- RTL Support / Arabic Community Section -->
+  <section class="rtl-support-section">
+    <div class="container">
+      <div class="rtl-support-content">
+        <div class="rtl-text">
+          <div class="rtl-badge">
+            <span class="flag">🇸🇦 🇪🇬 🇦🇪 🇯🇴 🇵🇸</span>
+          </div>
+          <h2>Built with ❤️ for the Arabic Community</h2>
+          <p class="rtl-description">
+            This library was created with special care for Arabic developers and the broader RTL (Right-to-Left) community. 
+            It automatically detects and adapts to RTL layouts, ensuring your applications look perfect in Arabic, Hebrew, Persian, and other RTL languages.
+          </p>
+          <div class="rtl-features">
+            <div class="rtl-feature-item">
+              <span class="icon">✨</span>
+              <span>Automatic RTL detection</span>
+            </div>
+              <div class="rtl-feature-item">
+              <span class="icon">🌐</span>
+              <span>Full bidirectional support</span>
+            </div>
+            <div class="rtl-feature-item">
+              <span class="icon">🔄</span>
+              <span>Reversed animations for RTL</span>
+            </div>
+          
+            <div class="rtl-feature-item">
+              <span class="icon">📱</span>
+              <span>No extra configuration needed!</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rtl-demo">
+          <div class="direction-toggle-card">
+            <div  style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3>Try RTL Mode</h3>
+           <div class="current-direction">
+              <span class="label">Current Direction:</span>
+              <span class="direction-value">{{ getCurrentDirection() }}</span>
+            </div>
+          </div>
+            <p>Toggle the entire page direction to see how the library adapts automatically</p>
+            
+           
+
+            <button class="btn-toggle-direction" (click)="toggleGlobalDirection()">
+              <span class="toggle-icon">🔄</span>
+              <span>Switch to {{ currentDirection === 'ltr' ? 'RTL (العربية)' : 'LTR (English)' }}</span>
+            </button>
+
+            <!-- <div class="rtl-tip">
+              <strong>💡 Tip:</strong> After toggling, try opening any side page to see the automatic RTL adaptation!
+            </div> -->
+          </div>
+
+          <div class="rtl-code-preview">
+            <!-- <div class="code-header">
+              <span>No extra configuration needed!</span>
+            </div> -->
+            <pre><code>// Automatically detects RTL
+&lt;html dir="rtl"&gt;
+
+// Side pages adapt automatically
+sidePageService.openSidePage('demo', Component);
+
+// Animations reverse automatically! ✨</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="arabic-message">
+        <p class="arabic-text">
+          نحن فخورون بدعم المجتمع العربي في تطوير تطبيقات ويب حديثة وسهلة الاستخدام
+          <br>
+          <small>We are proud to support the Arabic community in developing modern and user-friendly web applications</small>
+        </p>
+      </div> -->
     </div>
   </section>
 
   <section id="features" class="features">
     <div class="container">
-      <h2>Features</h2>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="feature-position"></i>
+      <div class="section-header">
+        <h2>Real-World Use Cases</h2>
+        <p class="section-subtitle">See how ngx-side-page solves common UI challenges</p>
+      </div>
+      
+      <div class="use-cases-grid">
+        <div class="use-case-card" (click)="openFormExample()">
+          <div class="card-icon">📝</div>
+          <h3>Forms & Data Entry</h3>
+          <p>Perfect for forms that don't interrupt the user's workflow</p>
+          <div class="card-code">
+            <code>position: 'end'</code>
+            <code>width: '400px'</code>
           </div>
-          <h3>Flexible Positioning</h3>
-          <p>Place your side page on the left or right side of the screen.</p>
-          <button class="btn small" (click)="openSidePageStart()">Left Side Demo</button>
+          <span class="card-action">Try it →</span>
         </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="feature-size"></i>
+        <div class="use-case-card" (click)="openDetailsExample()">
+          <div class="card-icon">🔍</div>
+          <h3>Details & Preview</h3>
+          <p>Show detailed information without navigating away</p>
+          <div class="card-code">
+            <code>showCloseBtn: true</code>
+            <code>hasBackdrop: true</code>
           </div>
-          <h3>Customizable Size</h3>
-          <p>Set width, min-width, and max-width to fit your needs.</p>
-          <button class="btn small" (click)="openSidePageWide()">Wide Demo</button>
+          <span class="card-action">Try it →</span>
         </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="feature-data"></i>
+        <div class="use-case-card" (click)="openSidePageStart()">
+          <div class="card-icon">🧭</div>
+          <h3>Navigation & Menus</h3>
+          <p>Sidebar navigation that slides from any direction</p>
+          <div class="card-code">
+            <code>position: 'start'</code>
+            <code>RTL support</code>
           </div>
-          <h3>Data Passing</h3>
-          <p>Easily pass main_data to your side page components.</p>
-          <button class="btn small" (click)="openSidePageWithData()">Data Demo</button>
+          <span class="card-action">Try it →</span>
         </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="feature-events"></i>
+        <div class="use-case-card" (click)="openWizardExample()">
+          <div class="card-icon">🪄</div>
+          <h3>Multi-Step Wizards</h3>
+          <p>Guide users through complex processes step by step</p>
+          <div class="card-code">
+            <code>data passing</code>
+            <code>event handling</code>
           </div>
-          <h3>Rich Events</h3>
-          <p>Subscribe to opening and closing events.</p>
-          <button class="btn small" (click)="openSidePageWithEvents()">Events Demo</button>
+          <span class="card-action">Try it →</span>
+        </div>
+
+        <div class="use-case-card" (click)="openDisableCloseDemo()">
+          <div class="card-icon">🔒</div>
+          <h3>Critical Actions</h3>
+          <p>Prevent accidental closes for important operations</p>
+          <div class="card-code">
+            <code>disableClose: true</code>
+            <code>showCloseBtn: false</code>
+          </div>
+          <span class="card-action">Try it →</span>
+        </div>
+
+        <div class="use-case-card" (click)="openZIndexTest()">
+          <div class="card-icon">📚</div>
+          <h3>Stacked Panels</h3>
+          <p>Multiple panels with proper z-index management</p>
+          <div class="card-code">
+            <code>zIndex: 1000+</code>
+            <code>layering control</code>
+          </div>
+          <span class="card-action">Try it →</span>
+        </div>
+      </div>
+
+      <div class="features-highlight">
+        <div class="highlight-item">
+          <span class="highlight-icon">⚡</span>
+          <h4>Blazing Fast</h4>
+          <p>Optimized animations and minimal bundle size</p>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-icon">🌍</span>
+          <h4>RTL Ready</h4>
+          <p>Automatic RTL detection and reversed animations</p>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-icon">🎨</span>
+          <h4>Fully Customizable</h4>
+          <p>Custom classes, sizes, positions, and more</p>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-icon">📦</span>
+          <h4>TypeScript First</h4>
+          <p>Full type safety and IntelliSense support</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="examples" class="examples">
+  <section id="examples" class="code-examples">
     <div class="container">
-      <h2>Examples</h2>
-      <div class="examples-showcase">
-        <div class="example">
-          <h3>Basic Form Example</h3>
-          <p>Perfect for forms that don't need the full screen.</p>
-          <button class="btn" (click)="openFormExample()">Open Form</button>
+      <div class="section-header">
+        <h2>Quick Start Examples</h2>
+        <p class="section-subtitle">Copy, paste, and run - it's that simple</p>
+      </div>
+
+      <div class="examples-grid">
+        <!-- Example 1: Basic Usage -->
+        <div class="code-example-card">
+          <div class="example-header">
+            <h3>1. Basic Usage</h3>
+            <button class="copy-code-btn" (click)="copyToClipboard(basicExample)">📋 Copy</button>
+          </div>
+          <div class="code-block">
+            <pre><code>{{ basicExample }}</code></pre>
+          </div>
+          <button class="btn primary" (click)="openSidePage()">▶️ Run Example</button>
         </div>
 
-        <div class="example">
-          <h3>Details View</h3>
-          <p>Show detailed information without navigating away.</p>
-          <button class="btn" (click)="openDetailsExample()">Open Details</button>
+        <!-- Example 2: With Options -->
+        <div class="code-example-card">
+          <div class="example-header">
+            <h3>2. With Custom Options</h3>
+            <button class="copy-code-btn" (click)="copyToClipboard(optionsExample)">📋 Copy</button>
+          </div>
+          <div class="code-block">
+            <pre><code>{{ optionsExample }}</code></pre>
+          </div>
+          <button class="btn primary" (click)="openSidePageWide()">▶️ Run Example</button>
         </div>
 
-        <div class="example">
-          <h3>Multi-Step Process</h3>
-          <p>Guide users through a multi-step process.</p>
-          <button class="btn" (click)="openWizardExample()">Open Wizard</button>
+        <!-- Example 3: Data Passing -->
+        <div class="code-example-card">
+          <div class="example-header">
+            <h3>3. Passing Data</h3>
+            <button class="copy-code-btn" (click)="copyToClipboard(dataExample)">📋 Copy</button>
+          </div>
+          <div class="code-block">
+            <pre><code>{{ dataExample }}</code></pre>
+          </div>
+          <button class="btn primary" (click)="openSidePageWithData()">▶️ Run Example</button>
         </div>
 
-        <div class="example">
-          <h3>RTL Support</h3>
-          <p>Automatic RTL support with reversed animations.</p>
-          <button class="btn" (click)="openRTLDemo()">RTL Demo</button>
+        <!-- Example 4: Event Handling -->
+        <div class="code-example-card">
+          <div class="example-header">
+            <h3>4. Event Handling</h3>
+            <button class="copy-code-btn" (click)="copyToClipboard(eventExample)">📋 Copy</button>
+          </div>
+          <div class="code-block">
+            <pre><code>{{ eventExample }}</code></pre>
+          </div>
+          <button class="btn primary" (click)="openSidePageWithEvents()">▶️ Run Example</button>
         </div>
 
-        <div class="example">
-          <h3>Z-Index Control</h3>
-          <p>Test custom z-index values and layering.</p>
-          <button class="btn" (click)="openZIndexTest()">Z-Index Test</button>
+        <!-- Example 5: RTL Support -->
+        <div class="code-example-card">
+          <div class="example-header">
+            <h3>5. RTL Support</h3>
+            <button class="copy-code-btn" (click)="copyToClipboard(rtlExample)">📋 Copy</button>
+          </div>
+          <div class="code-block">
+            <pre><code>{{ rtlExample }}</code></pre>
+          </div>
+          <button class="btn primary" (click)="openRTLDemo()">▶️ Run Example</button>
         </div>
 
-        <div class="example">
-          <h3>Disable Close</h3>
-          <p>Side page that cannot be closed by clicking outside.</p>
-          <button class="btn" (click)="openDisableCloseDemo()">Disable Close Demo</button>
+        <!-- Example 6: Custom Styling -->
+        <div class="code-example-card">
+          <div class="example-header">
+            <h3>6. Custom Styling</h3>
+            <button class="copy-code-btn" (click)="copyToClipboard(customStyleExample)">📋 Copy</button>
+          </div>
+          <div class="code-block">
+            <pre><code>{{ customStyleExample }}</code></pre>
+          </div>
+          <button class="btn primary" (click)="openCustomStyledExample()">▶️ Run Example</button>
         </div>
+      </div>
 
-        <div class="example featured">
-          <h3>🎮 Interactive Playground</h3>
-          <p>Try all options and configurations in real-time!</p>
-          <a href="#playground" class="btn featured">Go to Playground</a>
-        </div>
+      <div class="examples-cta">
+        <h3>Want to explore all possibilities?</h3>
+        <a href="#playground" class="btn large primary">Open Interactive Playground →</a>
       </div>
     </div>
   </section>
@@ -192,7 +428,7 @@
               <label class="checkbox-label">
                 <input type="checkbox" formControlName="disableClose">
                 <span class="checkmark"></span>
-                Disable Close (prevent backdrop/ESC close)
+              <span>  Disable Close <br><small>(prevent backdrop/ESC close)</small></span>
               </label>
             </div>
 
@@ -200,7 +436,7 @@
               <label class="checkbox-label">
                 <input type="checkbox" formControlName="showCloseBtn">
                 <span class="checkmark"></span>
-                Show Close Button (default: true)
+                Show Close Button <br> (default: true)
               </label>
             </div>
 
@@ -208,19 +444,19 @@
               <label class="checkbox-label">
                 <input type="checkbox" formControlName="hasBackdrop">
                 <span class="checkmark"></span>
-                Has Backdrop (default: true)
+                Has Backdrop <br> (default: true)
               </label>
             </div>
 
             <!-- Custom Classes -->
             <div class="form-group">
-              <label>Panel Class (custom CSS class for side page)</label>
+              <label>Panel Class <br> (custom CSS class for side page)</label>
               <input type="text" formControlName="panelClass" class="form-control" placeholder="e.g. my-custom-panel, rounded-panel, dark-panel">
               <small class="form-hint">Try: my-custom-panel, rounded-panel, or dark-panel</small>
             </div>
 
             <div class="form-group">
-              <label>Backdrop Class (custom CSS class for backdrop)</label>
+              <label>Backdrop Class <br> (custom CSS class for backdrop)</label>
               <input type="text" formControlName="backdropClass" class="form-control" placeholder="e.g. my-custom-backdrop, blur-backdrop">
               <small class="form-hint">Try: my-custom-backdrop, green-backdrop, or blur-backdrop</small>
             </div>
@@ -242,7 +478,7 @@
               🚀 Open Side Page with These Settings
             </button>
             <button class="btn secondary" (click)="resetPlayground()">
-              🔄 Reset to Defaults
+               Reset 
             </button>
           </div>
         </div>

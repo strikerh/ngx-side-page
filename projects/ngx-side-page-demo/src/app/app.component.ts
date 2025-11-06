@@ -16,6 +16,60 @@ export class AppComponent {
   currentDirection: 'ltr' | 'rtl' = 'ltr';
   playgroundForm: FormGroup;
 
+  // Code examples for display
+  basicExample = `const ref = this.sidePageService.openSidePage(
+  'demo',
+  MyComponent,
+  { width: '400px' }
+);`;
+
+  optionsExample = `this.sidePageService.openSidePage('demo', MyComponent, {
+  position: 'end',      // or 'start'
+  width: '600px',
+  minWidth: '300px',
+  maxWidth: '90%',
+  showCloseBtn: true,
+  hasBackdrop: true
+});`;
+
+  dataExample = `const ref = this.sidePageService.openSidePage('demo', MyComponent, {
+  data: {
+    userId: 123,
+    userName: 'John Doe',
+    action: 'edit'
+  }
+});
+
+// In your component:
+constructor(@Inject(SIDE_PAGE_DATA) public data: any) {}`;
+
+  eventExample = `const ref = this.sidePageService.openSidePage('demo', MyComponent);
+
+ref.afterClosed().subscribe(result => {
+  console.log('Side page closed with:', result);
+});
+
+// To close with data:
+ref.close({ saved: true, data: {...} });`;
+
+  rtlExample = `// Automatically detects RTL from document direction
+// Animations reverse automatically!
+
+this.sidePageService.openSidePage('demo', MyComponent, {
+  position: 'start' // Respects RTL direction
+});`;
+
+  customStyleExample = `this.sidePageService.openSidePage('demo', MyComponent, {
+  panelClass: 'my-custom-panel',
+  backdropClass: 'blur-backdrop',
+  zIndex: 2000
+});
+
+/* In your CSS: */
+.my-custom-panel {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}`;
+
   constructor(private _sidePageService: SidePageService, private fb: FormBuilder) {
     // Initialize with current document direction
     this.currentDirection = (document.documentElement.getAttribute('dir') as 'ltr' | 'rtl') || 'ltr';
@@ -36,6 +90,16 @@ export class AppComponent {
       panelClass: [''],
       backdropClass: [''],
       dataType: ['simple']
+    });
+  }
+
+  // Utility: Copy to clipboard
+  copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      // You could add a toast notification here
+      console.log('Copied to clipboard:', text);
+    }).catch(err => {
+      console.error('Failed to copy:', err);
     });
   }
 
@@ -262,6 +326,20 @@ export class AppComponent {
   // Get current direction for display
   getCurrentDirection(): string {
     return this.currentDirection.toUpperCase();
+  }
+
+  // Custom styled example
+  openCustomStyledExample() {
+    this._sidePageService.openSidePage('custom-styled', SidePageExampleComponent, {
+      width: '500px',
+      panelClass: 'my-custom-panel',
+      backdropClass: 'blur-backdrop',
+      data: {
+        title: 'Custom Styled Panel',
+        description: 'This panel has custom CSS classes applied to both the panel and backdrop.',
+        type: 'custom-styled'
+      }
+    });
   }
 
   // Test disableClose option
