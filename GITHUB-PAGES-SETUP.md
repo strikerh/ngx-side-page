@@ -89,4 +89,8 @@ The demo will significantly boost your library's adoption by letting users try b
 
 ---
 
-**Status**: ✅ Ready to deploy! Just follow the manual setup steps above.
+**Status**: ✅ Ready to deploy! Workflow will trigger automatically on push to master.
+
+---
+
+*Last updated: November 6, 2025*
