@@ -33,8 +33,8 @@ export class SidePageExampleComponent implements OnInit {
 
   closeWithResult(result: any) {
     // This would be handled by the side page service
-    this.main_ref.close();
     console.log('Closing with result:', result);
+    this.main_ref.close(result);
   }
 
   // For the wizard example
