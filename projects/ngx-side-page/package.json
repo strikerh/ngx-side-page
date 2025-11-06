@@ -1,7 +1,24 @@
 {
   "name": "ngx-side-page",
   "version": "18.0.64",
-  "description": "A versatile Angular library for creating and managing side pages with ease.",
+  "description": "A versatile Angular library for creating and managing side pages with ease. Try the live demo: https://strikerh.github.io/ngx-side-page/",
+  "homepage": "https://strikerh.github.io/ngx-side-page/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/strikerh/ngx-side-page.git"
+  },
+  "keywords": [
+    "angular",
+    "side-panel",
+    "drawer",
+    "slide-out",
+    "panel",
+    "sidebar",
+    "component",
+    "library",
+    "typescript",
+    "ngx"
+  ],
   "scripts": {
     "publish-sidePage": "ng build ngx-side-page && cd ../../dist/ngx-side-page && npm publish",
     "build-sidePage": "ng build ngx-side-page",

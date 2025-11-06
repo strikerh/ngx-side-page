@@ -6,12 +6,18 @@
 
 A versatile Angular library for creating and managing side pages (slide-out panels) with ease. This library provides a service-based approach to display components in slide-out panels with smooth animations, similar to Angular Material's dialog system but specifically designed for side panels.
 
+## 🚀 Live Demo
+
+**Try it now:** [https://strikerh.github.io/ngx-side-page/](https://strikerh.github.io/ngx-side-page/)
+
+See the library in action with interactive examples showcasing all features including animations, positioning, data passing, and more!
+
 ## Links
 
-- 📦 [NPM Package](https://www.npmjs.com/package/ngx-side-page)
+- � **[Live Demo](https://strikerh.github.io/ngx-side-page/)** - Try it now!
+- �📦 [NPM Package](https://www.npmjs.com/package/ngx-side-page)
 - 🔗 [GitHub Repository](https://github.com/strikerh/ngx-side-page)
-- � [Live Demo](https://strikerh.github.io/ngx-side-page/)
-- �📖 [Documentation](https://github.com/strikerh/ngx-side-page#readme)
+- � [Documentation](https://github.com/strikerh/ngx-side-page#readme)
 
 ## Features
 
@@ -40,6 +46,8 @@ A versatile Angular library for creating and managing side pages (slide-out pane
 npm install ngx-side-page
 ```
 
+> 🎯 **Try before you install:** Check out the [live interactive demo](https://strikerh.github.io/ngx-side-page/) to see all features in action!
+
 ### 2. Configure animations (Required)
 
 Add `provideAnimationsAsync()` to your application configuration:
@@ -58,7 +66,20 @@ export const appConfig: ApplicationConfig = {
 
 **Note:** The library uses Angular animations for smooth slide-in/slide-out effects. The `provideAnimationsAsync()` provider is required for proper functionality.
 
+---
+
+## 🎯 **Quick Start Guide**
+
+**Want to see it in action first?** 
+👉 **[Open the Live Demo](https://strikerh.github.io/ngx-side-page/)** 👈
+
+The demo shows all features including animations, positioning, data passing, forms, and customization options. Perfect for understanding how the library works before integration!
+
+---
+
 ## Basic Usage
+
+> 🎮 **Interactive Examples**: All code examples below are running live in the [demo](https://strikerh.github.io/ngx-side-page/). Click to see them in action!
 
 ### 1. Import the Service
 
@@ -169,6 +190,8 @@ bootstrapApplication(AppComponent, {
 ```
 
 ## Advanced Usage Examples
+
+> 💡 **See these examples in action:** Visit the [live demo](https://strikerh.github.io/ngx-side-page/) to interact with all these examples!
 
 ### Left-Side Panel
 
@@ -288,6 +311,8 @@ openDataPanel() {
 ## Form Example
 
 Here's a complete example of using a form in a side page:
+
+> 📝 **Live Form Demo**: See this exact form example working in the [interactive demo](https://strikerh.github.io/ngx-side-page/) - try submitting data and seeing the results!
 
 ```typescript
 // Parent Component
@@ -410,6 +435,7 @@ The library automatically detects RTL direction from `document.documentElement` 
 
 Contributions are welcome! Please read our contributing guidelines and submit pull requests to our GitHub repository.
 
+- 🎮 [Try Live Demo](https://strikerh.github.io/ngx-side-page/) - Test the library first
 - 🐛 [Report Issues](https://github.com/strikerh/ngx-side-page/issues)
 - 💡 [Request Features](https://github.com/strikerh/ngx-side-page/issues/new?template=feature_request.md)
 - 🔀 [Submit Pull Requests](https://github.com/strikerh/ngx-side-page/pulls)

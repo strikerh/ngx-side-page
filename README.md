@@ -5,11 +5,15 @@
 
 This project contains the **ngx-side-page** Angular library and its demo application.
 
+## 🚀 **[Try Live Demo](https://strikerh.github.io/ngx-side-page/)**
+
+Experience the interactive demo showcasing all library features including animations, positioning, data passing, and customization options.
+
 ## 📦 NPM Package
 
 - **Package**: [ngx-side-page](https://www.npmjs.com/package/ngx-side-page)
 - **Repository**: [GitHub](https://github.com/strikerh/ngx-side-page)
-- **Live Demo**: [https://strikerh.github.io/ngx-side-page/](https://strikerh.github.io/ngx-side-page/)
+- **Live Demo**: [https://strikerh.github.io/ngx-side-page/](https://strikerh.github.io/ngx-side-page/) ⭐
 
 ## Projects Structure
 
