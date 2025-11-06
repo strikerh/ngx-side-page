@@ -11,7 +11,7 @@ import {SIDE_PAGE_DATA, SIDE_PAGE_REF} from "../side-page-data.token";
     NgIf
   ],
   templateUrl: './page.component.html',
-  styleUrl: './page.component.css',
+  styleUrls: ['./page.component.css'],
   animations: animations(),
 })
 export class PageComponent implements OnInit {
@@ -56,7 +56,7 @@ export class PageComponent implements OnInit {
 
   closeClicked() {
     this._isOpen = false;
-    this.sidePageService.closeLastSidePage();
+    this.sidePageService.closeSidePage(this._key);
     setTimeout(() => {
       this.contentContainer.clear();
 

@@ -27,10 +27,11 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "main": "projects/ngx-side-page/src/test.ts",
+            "karmaConfig": "karma.conf.cjs",
             "tsConfig": "projects/ngx-side-page/tsconfig.spec.json",
             "polyfills": [
-              "zone.js",
-              "zone.js/testing"
+              "zone.js"
             ]
           }
         }
@@ -147,5 +148,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

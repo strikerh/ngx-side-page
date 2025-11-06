@@ -69,6 +69,10 @@ export class SidePageService {
     this.config = config || {};
 
     this.sidePages$.subscribe((pages) => {
+      if (!this.isBrowser()) {
+        return;
+      }
+
       if (pages.length) {
         // Add overflow: hidden to body when any side page is open
         document.body.style.overflow = 'hidden';
@@ -82,6 +86,10 @@ export class SidePageService {
 
 
   addComponentToBody() {
+    if (!this.isBrowser()) {
+      return;
+    }
+
     const componentRef: ComponentRef<SidePageComponent> = createComponent(SidePageComponent, {
       environmentInjector: this.appRef.injector,
     });
@@ -107,28 +115,36 @@ export class SidePageService {
   }
 
   closeLastSidePage(someValue: any = null) {
-    const sp = this.sidePages[this.sidePages.length - 1];
-    this.startClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-    // this.startClosing$.complete();
-    this.sidePages.pop();
-    this.sidePages$.next(this.sidePages);
-    setTimeout(() => {
-      this.endClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-      // this.endClosing$.complete();
-    }, 300);
+    if (!this.sidePages.length) {
+      return;
+    }
+
+    this.closeSidePageAtIndex(this.sidePages.length - 1, someValue);
   }
 
   closeSidePage(key: string, someValue: any) {
-    const sp = this.sidePages.find((sp1) => sp1.key === key);
+    const index = this.sidePages.findIndex((sp1) => sp1.key === key);
+    if (index === -1) {
+      return;
+    }
+
+    this.closeSidePageAtIndex(index, someValue);
+  }
+
+  private closeSidePageAtIndex(index: number, someValue: any) {
+    const sp = this.sidePages[index];
+
     if (!sp) {
       return;
     }
+
     this.startClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-    // this.startClosing$.complete();
-    this.sidePages.pop();
+
+    this.sidePages.splice(index, 1);
+    this.sidePages$.next(this.sidePages);
+
     setTimeout(() => {
       this.endClosing$.next({key: sp.key, sidePage: sp, value: someValue});
-      // this.endClosing$.complete();
     }, 300);
   }
 
@@ -149,6 +165,10 @@ export class SidePageService {
     }, 300);
 
     return spRef;
+  }
+
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof document !== 'undefined';
   }
 
 
@@ -214,7 +234,7 @@ export class SidePageRef<T> {
   }
 
   close(someValue?: any): void {
-    this._sidePageService.closeLastSidePage(someValue);
+    this._sidePageService.closeSidePage(this._sidePage.key, someValue);
 
   }
 }

@@ -15,7 +15,7 @@ import {PageComponent} from "./page/page.component";
     PageComponent
   ],
   templateUrl: './side-page.component.html',
-  styleUrl: './side-page.component.scss',
+  styleUrls: ['./side-page.component.scss'],
   animations: animations(),
 
 })
@@ -43,7 +43,7 @@ export class SidePageComponent implements OnInit {
     if (sidePage.options.disableClose)
       return;
     if (this.sidePageService)
-      this.sidePageService.closeLastSidePage(value);
+      this.sidePageService.closeSidePage(sidePage.key, value);
 
   }
 
