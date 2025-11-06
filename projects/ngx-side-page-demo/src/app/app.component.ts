@@ -1,25 +1,42 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { SidePageService } from 'ngx-side-page';
 import { SidePageExampleComponent } from './side-page1/side-page-example.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'ngx-side-page-demo';
   currentDirection: 'ltr' | 'rtl' = 'ltr';
+  playgroundForm: FormGroup;
 
-  constructor(private _sidePageService: SidePageService) {
+  constructor(private _sidePageService: SidePageService, private fb: FormBuilder) {
     // Initialize with current document direction
     this.currentDirection = (document.documentElement.getAttribute('dir') as 'ltr' | 'rtl') || 'ltr';
     
     // Make this component available globally for demo purposes
     (window as any).appComponent = this;
+
+    // Initialize playground form
+    this.playgroundForm = this.fb.group({
+      position: ['end'],
+      width: ['400px'],
+      minWidth: ['250px'],
+      maxWidth: ['500px'],
+      zIndex: [1000],
+      disableClose: [false],
+      showCloseBtn: [true],
+      hasBackdrop: [true],
+      panelClass: [''],
+      backdropClass: [''],
+      dataType: ['simple']
+    });
   }
 
   // Basic demo
@@ -263,6 +280,193 @@ export class AppComponent {
 
     ref.afterClosed().subscribe(result => {
       console.log('Side page closed with result:', result);
+    });
+  }
+
+  // Interactive playground
+  openPlayground() {
+    const ref = this._sidePageService.openSidePage('playground', SidePageExampleComponent, {
+      width: '500px',
+      maxWidth: '95%',
+      position: 'end',
+      data: {
+        title: 'Interactive Playground',
+        description: 'Try all the different options and configurations available for the side page component.',
+        type: 'playground'
+      }
+    });
+
+    ref.afterClosed().subscribe(result => {
+      console.log('Playground closed with result:', result);
+    });
+  }
+
+  // Playground methods for main page
+  getCurrentConfig() {
+    const formValue = this.playgroundForm.value;
+    const config: any = {};
+
+    // Define default values
+    const defaults = {
+      position: 'end',
+      width: '400px',
+      minWidth: '250px',
+      maxWidth: '500px',
+      zIndex: 1000,
+      disableClose: false,
+      showCloseBtn: true,
+      hasBackdrop: true,
+      dataType: 'simple'
+    };
+
+    // Only include non-default values
+    if (formValue.position !== defaults.position) {
+      config.position = formValue.position;
+    }
+    if (formValue.width !== defaults.width) {
+      config.width = formValue.width;
+    }
+    if (formValue.minWidth !== defaults.minWidth) {
+      config.minWidth = formValue.minWidth;
+    }
+    if (formValue.maxWidth !== defaults.maxWidth) {
+      config.maxWidth = formValue.maxWidth;
+    }
+    if (parseInt(formValue.zIndex) !== defaults.zIndex) {
+      config.zIndex = parseInt(formValue.zIndex);
+    }
+    if (formValue.disableClose !== defaults.disableClose) {
+      config.disableClose = formValue.disableClose;
+    }
+    if (formValue.showCloseBtn !== defaults.showCloseBtn) {
+      config.showCloseBtn = formValue.showCloseBtn;
+    }
+    if (formValue.hasBackdrop !== defaults.hasBackdrop) {
+      config.hasBackdrop = formValue.hasBackdrop;
+    }
+    // Include panelClass and backdropClass if they have values (not empty)
+    if (formValue.panelClass && formValue.panelClass.trim()) {
+      config.panelClass = formValue.panelClass.trim();
+    }
+    if (formValue.backdropClass && formValue.backdropClass.trim()) {
+      config.backdropClass = formValue.backdropClass.trim();
+    }
+    if (formValue.dataType !== defaults.dataType) {
+      config.dataType = formValue.dataType;
+    }
+
+    // Always include data for demonstration purposes
+    config.data = this.generateSampleData(formValue.dataType);
+
+    return config;
+  }
+
+  generateSampleData(dataType: string) {
+    switch (dataType) {
+      case 'simple':
+        return {
+          title: 'Playground Test',
+          description: 'This is a test with simple data',
+          type: 'playground-test',
+          message: 'Hello from the playground!'
+        };
+      case 'complex':
+        return {
+          title: 'Complex Data Test',
+          description: 'This test contains complex nested data',
+          type: 'playground-test',
+          user: {
+            id: 123,
+            name: 'John Doe',
+            email: 'john@example.com',
+            settings: {
+              theme: 'dark',
+              notifications: true
+            }
+          },
+          metadata: {
+            version: '1.0.0',
+            lastUpdated: new Date().toISOString(),
+            features: ['feature1', 'feature2', 'feature3']
+          }
+        };
+      case 'list':
+        return {
+          title: 'List Data Test',
+          description: 'This test contains a list of items',
+          type: 'playground-test',
+          items: [
+            { id: 1, name: 'Item One', active: true, value: 100 },
+            { id: 2, name: 'Item Two', active: false, value: 250 },
+            { id: 3, name: 'Item Three', active: true, value: 375 },
+            { id: 4, name: 'Item Four', active: false, value: 150 }
+          ],
+          totalCount: 4
+        };
+      case 'form':
+        return {
+          title: 'Form Data Test',
+          description: 'This test simulates form data',
+          type: 'playground-test',
+          formData: {
+            firstName: 'Jane',
+            lastName: 'Smith',
+            email: 'jane.smith@example.com',
+            phone: '+1 (555) 123-4567',
+            address: {
+              street: '123 Main St',
+              city: 'Anytown',
+              state: 'CA',
+              zip: '90210'
+            },
+            preferences: {
+              newsletter: true,
+              notifications: false,
+              theme: 'auto'
+            }
+          }
+        };
+      default:
+        return { message: 'Basic playground data' };
+    }
+  }
+
+  openWithCurrentConfig() {
+    const formValue = this.playgroundForm.value;
+    
+    // Use complete configuration (including defaults) for actual side page creation
+    const fullConfig = {
+      position: formValue.position,
+      width: formValue.width,
+      minWidth: formValue.minWidth,
+      maxWidth: formValue.maxWidth,
+      zIndex: parseInt(formValue.zIndex),
+      disableClose: formValue.disableClose,
+      showCloseBtn: formValue.showCloseBtn,
+      hasBackdrop: formValue.hasBackdrop,
+      data: this.generateSampleData(formValue.dataType)
+    };
+    
+    const ref = this._sidePageService.openSidePage('playground-test', SidePageExampleComponent, fullConfig);
+
+    ref.afterClosed().subscribe(result => {
+      console.log('Playground test side page closed with result:', result);
+    });
+  }
+
+  resetPlayground() {
+    this.playgroundForm.patchValue({
+      position: 'end',
+      width: '400px',
+      minWidth: '250px',
+      maxWidth: '500px',
+      zIndex: 1000,
+      disableClose: false,
+      showCloseBtn: true,
+      hasBackdrop: true,
+      panelClass: '',
+      backdropClass: '',
+      dataType: 'simple'
     });
   }
 }

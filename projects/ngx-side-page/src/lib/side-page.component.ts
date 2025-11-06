@@ -50,6 +50,22 @@ export class SidePageComponent implements OnInit {
     return resolveDirection();
   }
 
+  // Helper method to check if backdrop should be shown
+  // Returns true if at least one side page has hasBackdrop enabled (default is true)
+  shouldShowBackdrop(): boolean {
+    return this.sidePages.some(sp => sp.options.hasBackdrop !== false);
+  }
+
+  // Helper method to get backdrop custom classes
+  getBackdropClass(): string {
+    // Get backdrop classes from all open side pages (last one takes precedence)
+    if (this.sidePages.length > 0) {
+      const lastPage = this.sidePages[this.sidePages.length - 1];
+      return lastPage.options.backdropClass || '';
+    }
+    return '';
+  }
+
   // Helper method to get overlay z-index (should be lower than side pages)
   getOverlayZIndex(): number {
     if (this.sidePages.length > 0) {

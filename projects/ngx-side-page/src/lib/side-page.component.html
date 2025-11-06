@@ -1,18 +1,20 @@
 <!--{{ sidePages.length }}-->
-<div [@show]="sidePages.length ? 'in' : 'out'"
-     (click)="close(sidePages[sidePages.length-1])"
-     class="overlay"
-     [ngStyle]="{
-       'z-index': getOverlayZIndex()
-     }">
-<!--  {{ sidePages.length }}-->
-</div>
+@if (shouldShowBackdrop() && sidePages.length > 0) {
+  <div [@show]="sidePages.length ? 'in' : 'out'"
+       (click)="close(sidePages[sidePages.length-1])"
+       [class]="'overlay ' + getBackdropClass()"
+       [ngStyle]="{
+         'z-index': getOverlayZIndex()
+       }">
+  <!--  {{ sidePages.length }}-->
+  </div>
+}
 
 
 @for (sidePage of sidePages; track sidePage?.key) {
   @if (sidePage.options.position === 'end') {
     <lib-page
-      class="fixed  top-0 bottom-0  bg-white flex flex-col shadow-lg"
+      [class]="'fixed top-0 bottom-0 bg-white flex flex-col shadow-lg ' + (sidePage.options.panelClass || '')"
       style="inset-Inline-End: 0;"
       [ngStyle]="{
         'min-width': sidePage.options.minWidth || '200px',
@@ -26,7 +28,7 @@
   @if (sidePage.options.position === 'start') {
     <lib-page
       style="inset-Inline-start: 0%;"
-      class="fixed  top-0 bottom-0  bg-white flex flex-col  shadow-lg"
+      [class]="'fixed top-0 bottom-0 bg-white flex flex-col shadow-lg ' + (sidePage.options.panelClass || '')"
       [ngStyle]="{
         'min-width': sidePage.options.minWidth || '200px',
         'max-width': sidePage.options.maxWidth || '500px',

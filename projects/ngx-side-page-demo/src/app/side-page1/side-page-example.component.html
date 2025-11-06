@@ -541,5 +541,190 @@ const ref2 = sidePageService.openSidePage('layer2', Component, &#123;
         </button>
       </div>
     </div>
+
+    <!-- Interactive Playground -->
+    <div *ngIf="data.type === 'playground'" class="demo-section playground-demo">
+      <div class="playground-header">
+        <h3>🎮 Interactive Playground</h3>
+        <p>Configure all options below and see the changes in real-time!</p>
+      </div>
+
+      <form [formGroup]="playgroundForm" class="playground-form">
+        <!-- Position -->
+        <div class="form-group">
+          <label>Position</label>
+          <select formControlName="position" class="form-control">
+            <option value="end">End (Right in LTR, Left in RTL) (default)</option>
+            <option value="start">Start (Left in LTR, Right in RTL)</option>
+          </select>
+        </div>
+
+        <!-- Width -->
+        <div class="form-group">
+          <label>Width</label>
+          <select formControlName="width" class="form-control">
+            <option value="300px">300px</option>
+            <option value="400px">400px (default)</option>
+            <option value="500px">500px</option>
+            <option value="600px">600px</option>
+            <option value="50%">50%</option>
+            <option value="70%">70%</option>
+            <option value="100%">100%</option>
+          </select>
+        </div>
+
+        <!-- Min Width -->
+        <div class="form-group">
+          <label>Min Width</label>
+          <select formControlName="minWidth" class="form-control">
+            <option value="200px">200px</option>
+            <option value="250px">250px (default)</option>
+            <option value="300px">300px</option>
+            <option value="350px">350px</option>
+          </select>
+        </div>
+
+        <!-- Max Width -->
+        <div class="form-group">
+          <label>Max Width</label>
+          <select formControlName="maxWidth" class="form-control">
+            <option value="400px">400px</option>
+            <option value="500px">500px (default)</option>
+            <option value="600px">600px</option>
+            <option value="800px">800px</option>
+            <option value="90%">90%</option>
+            <option value="95%">95%</option>
+          </select>
+        </div>
+
+        <!-- Z-Index -->
+        <div class="form-group">
+          <label>Z-Index</label>
+          <select formControlName="zIndex" class="form-control">
+            <option value="1000">1000 (default)</option>
+            <option value="1100">1100</option>
+            <option value="1200">1200</option>
+            <option value="1500">1500</option>
+            <option value="2000">2000</option>
+          </select>
+        </div>
+
+        <!-- Boolean Options -->
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="disableClose">
+            <span class="checkmark"></span>
+            Disable Close (prevent backdrop/ESC close)
+          </label>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="showCloseBtn">
+            <span class="checkmark"></span>
+            Show Close Button (default: true)
+          </label>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="hasBackdrop">
+            <span class="checkmark"></span>
+            Has Backdrop (default: true)
+          </label>
+        </div>
+
+        <!-- Sample Data -->
+        <div class="form-group">
+          <label>Sample Data Type</label>
+          <select formControlName="dataType" class="form-control">
+            <option value="simple">Simple Text (default)</option>
+            <option value="complex">Complex Object</option>
+            <option value="list">List of Items</option>
+            <option value="form">Form Data</option>
+          </select>
+        </div>
+      </form>
+
+      <div class="playground-actions">
+        <button class="btn primary large" (click)="openWithCurrentConfig()">
+          🚀 Open Side Page with These Settings
+        </button>
+        <button class="btn secondary" (click)="resetPlayground()">
+          🔄 Reset to Defaults
+        </button>
+      </div>
+
+      <div class="current-config">
+        <h4>Current Configuration:</h4>
+        <pre class="config-preview">{{ getCurrentConfig() | json }}</pre>
+      </div>
+
+      <div class="playground-tips">
+        <h4>💡 Tips:</h4>
+        <ul>
+          <li>Try different <strong>positions</strong> and toggle RTL direction to see how it adapts</li>
+          <li>Use <strong>disableClose</strong> for critical forms or processes</li>
+          <li>Adjust <strong>z-index</strong> when working with multiple overlays</li>
+          <li>Set appropriate <strong>min/max widths</strong> for responsive designs</li>
+          <li>Toggle <strong>backdrop</strong> for different visual effects</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Playground Test Result -->
+    <div *ngIf="data.type === 'playground-test'" class="demo-section playground-result">
+      <div class="result-header">
+        <h3>🎯 Playground Test Result</h3>
+        <p>This side page was created with your custom configuration!</p>
+      </div>
+
+      <div class="config-display">
+        <h4>Applied Configuration:</h4>
+        <div class="config-grid">
+          <div class="config-item">
+            <strong>Position:</strong> {{ main_data.options.position || 'end' }}
+          </div>
+          <div class="config-item">
+            <strong>Width:</strong> {{ main_data.options.width || '400px' }}
+          </div>
+          <div class="config-item">
+            <strong>Min Width:</strong> {{ main_data.options.minWidth || '250px' }}
+          </div>
+          <div class="config-item">
+            <strong>Max Width:</strong> {{ main_data.options.maxWidth || '500px' }}
+          </div>
+          <div class="config-item">
+            <strong>Z-Index:</strong> {{ main_data.options.zIndex || 1000 }}
+          </div>
+          <div class="config-item">
+            <strong>Disable Close:</strong> {{ main_data.options.disableClose ? 'Yes' : 'No' }}
+          </div>
+          <div class="config-item">
+            <strong>Show Close Button:</strong> {{ main_data.options.showCloseBtn ? 'Yes' : 'No' }}
+          </div>
+          <div class="config-item">
+            <strong>Has Backdrop:</strong> {{ main_data.options.hasBackdrop ? 'Yes' : 'No' }}
+          </div>
+        </div>
+      </div>
+
+      <div class="data-display">
+        <h4>Sample Data:</h4>
+        <pre class="data-preview">{{ data | json }}</pre>
+      </div>
+
+      <div class="test-actions">
+        <button class="btn success" (click)="closeWithResult('Playground test completed successfully')">
+          ✅ Test Successful - Close
+        </button>
+        <button class="btn warning" (click)="closeWithResult('Playground test failed')">
+          ❌ Test Failed - Close
+        </button>
+        <button class="btn info" (click)="closeWithResult({ status: 'partial', notes: 'Some issues found' })">
+          ⚠️ Partial Success - Close with Data
+        </button>
+      </div>
+    </div>
   </div>
 </div>
