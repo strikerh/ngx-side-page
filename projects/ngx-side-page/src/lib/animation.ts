@@ -35,45 +35,29 @@ export const resolveDirection = (context?: AnimationDomContext): Direction => {
 };
 
 export const animations = (context?: AnimationDomContext) => {
-  const isRtl = resolveDirection(context) === 'rtl';
-  const val1 = isRtl ? ['-100%', '0%'] : ['100%', '0%'];
-  const val2 = isRtl ? ['100%', '0%'] : ['-100%', '0%'];
   return [
 
+    // Unified animation that takes direction parameter
     trigger('slideInOut', [
-      /*    state('in', style({
-            transform: 'translateX(0)'
-          })),
-          state('out', style({
-            transform: 'translateX(-100%)',
-            display: 'none'
-          })),*/
       transition(':enter', [
-        style({ transform: `translateX(${val1[0]})` }),
-        animate('150ms ease-in-out', style({ transform: `translateX(${val1[1]})` }))
-      ]),
+        style({ transform: 'translateX({{ direction }})' }),
+        animate('150ms ease-in-out', style({ transform: 'translateX(0%)' }))
+      ], { params: { direction: '100%' } }),
       transition(':leave', [
-        animate('150ms ease-in-out', style({ transform: `translateX(${val1[0]})` }))
-      ]),
+        animate('150ms ease-in-out', style({ transform: 'translateX({{ direction }})' }))
+      ], { params: { direction: '100%' } }),
       transition('in => out', animate('200ms ease-in-out')),
       transition('out => in', animate('200ms ease-in-out'))
     ]),
 
     trigger('slideInOutStart', [
-      // state('in', style({
-      //   transform: 'translateX(0)'
-      // })),
-      // state('out', style({
-      //   transform: 'translateX(100%)',
-      //   display: 'none'
-      // })),
       transition(':enter', [
-        style({ transform: `translateX(${val2[0]})` }),
-        animate('150ms ease-in-out', style({ transform: `translateX(${val2[1]})` }))
-      ]),
+        style({ transform: 'translateX({{ direction }})' }),
+        animate('150ms ease-in-out', style({ transform: 'translateX(0%)' }))
+      ], { params: { direction: '-100%' } }),
       transition(':leave', [
-        animate('150ms ease-in-out', style({ transform: `translateX(${val2[0]})` }))
-      ]),
+        animate('150ms ease-in-out', style({ transform: 'translateX({{ direction }})' }))
+      ], { params: { direction: '-100%' } }),
       transition('in => out', animate('200ms ease-in-out')),
       transition('out => in', animate('200ms ease-in-out'))
     ]),

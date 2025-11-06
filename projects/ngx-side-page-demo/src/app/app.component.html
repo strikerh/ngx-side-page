@@ -90,6 +90,24 @@
           <p>Guide users through a multi-step process.</p>
           <button class="btn" (click)="openWizardExample()">Open Wizard</button>
         </div>
+
+        <div class="example">
+          <h3>RTL Support</h3>
+          <p>Automatic RTL support with reversed animations.</p>
+          <button class="btn" (click)="openRTLDemo()">RTL Demo</button>
+        </div>
+
+        <div class="example">
+          <h3>Z-Index Control</h3>
+          <p>Test custom z-index values and layering.</p>
+          <button class="btn" (click)="openZIndexTest()">Z-Index Test</button>
+        </div>
+
+        <div class="example">
+          <h3>Disable Close</h3>
+          <p>Side page that cannot be closed by clicking outside.</p>
+          <button class="btn" (click)="openDisableCloseDemo()">Disable Close Demo</button>
+        </div>
       </div>
     </div>
   </section>
@@ -193,6 +211,18 @@ openSidePage() {{ '{' }}
     </div>
   </section>
 </main>
+
+<!-- Floating Direction Toggle Button -->
+<div class="direction-toggle-float">
+  <button 
+    class="direction-toggle-btn" 
+    (click)="toggleGlobalDirection()"
+    [title]="'Switch to ' + (currentDirection === 'ltr' ? 'RTL' : 'LTR') + ' mode'"
+  >
+    <span class="direction-icon">{{ currentDirection === 'ltr' ? '→' : '←' }}</span>
+    <span class="direction-text">Try the {{ currentDirection === 'ltr' ? 'RTL' : 'LTR' }} Direction</span>
+  </button>
+</div>
 
 <footer class="footer">
   <div class="container">

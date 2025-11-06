@@ -1,7 +1,5 @@
-:host{
-  z-index: 800;
+/* z-index now handled dynamically via ngStyle in template */
 
-}
 .side-page {
   transition: transform 0.3s ease-in-out;
 }

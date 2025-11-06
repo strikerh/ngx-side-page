@@ -29,6 +29,7 @@ export class SidePageExampleComponent implements OnInit {
 
   ngOnInit() {
     console.log('Side page main_data:', this.main_data);
+    console.log('Data type:', this.main_data?.data?.type);
   }
 
   closeWithResult(result: any) {
@@ -63,5 +64,27 @@ export class SidePageExampleComponent implements OnInit {
   isInvalid(controlName: string) {
     const control = this.contactForm.get(controlName);
     return control?.invalid && (control?.touched || this.submitted);
+  }
+
+  // RTL Demo methods
+  toggleDirection(direction: 'ltr' | 'rtl') {
+    const htmlElement = document.documentElement;
+    htmlElement.setAttribute('dir', direction);
+    htmlElement.style.direction = direction;
+  }
+
+  getCurrentDirection(): string {
+    const htmlElement = document.documentElement;
+    const dir = htmlElement.getAttribute('dir') || 'ltr';
+    return dir.toUpperCase();
+  }
+
+  // Open higher z-index layer for z-index demo
+  openHigherLayer() {
+    // We need to inject the parent app component method
+    // For demo purposes, we'll use a simple approach
+    if ((window as any).appComponent && (window as any).appComponent.openHigherZIndexTest) {
+      (window as any).appComponent.openHigherZIndexTest();
+    }
   }
 }

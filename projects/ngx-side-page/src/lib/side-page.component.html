@@ -1,7 +1,10 @@
 <!--{{ sidePages.length }}-->
 <div [@show]="sidePages.length ? 'in' : 'out'"
      (click)="close(sidePages[sidePages.length-1])"
-     class="overlay" >
+     class="overlay"
+     [ngStyle]="{
+       'z-index': getOverlayZIndex()
+     }">
 <!--  {{ sidePages.length }}-->
 </div>
 
@@ -15,8 +18,9 @@
         'min-width': sidePage.options.minWidth || '200px',
         'max-width': sidePage.options.maxWidth || '500px',
         'width': sidePage.options.width || '100%',
+        'z-index': sidePage.options.zIndex || 1000
       }"
-      [@slideInOut]
+      [@slideInOut]="{ value: true, params: { direction: getAnimationDirection('end') } }"
       [sidePage]="sidePage"></lib-page>
   }
   @if (sidePage.options.position === 'start') {
@@ -27,8 +31,9 @@
         'min-width': sidePage.options.minWidth || '200px',
         'max-width': sidePage.options.maxWidth || '500px',
         'width': sidePage.options.width || '100%',
+        'z-index': sidePage.options.zIndex || 1000
       }"
-      [@slideInOutStart]
+      [@slideInOutStart]="{ value: true, params: { direction: getAnimationDirection('start') } }"
       [sidePage]="sidePage"></lib-page>
   }
 }

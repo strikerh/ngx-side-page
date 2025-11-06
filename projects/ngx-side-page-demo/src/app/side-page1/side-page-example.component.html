@@ -362,5 +362,184 @@ ref.afterClosed().subscribe(result => &#123;
         </button>
       </div>
     </div>
+
+    <!-- RTL Demo -->
+    <div *ngIf="data.type === 'rtl'" class="demo-section rtl-demo">
+      <div class="rtl-notice">
+        <h3>🌍 RTL Support Demonstration</h3>
+        <p>The side page library automatically adapts to RTL (Right-to-Left) layouts. Use the floating toggle button to switch between LTR and RTL modes and see how all demos adapt automatically.</p>
+      </div>
+
+      <div class="rtl-features">
+        <h4>RTL Features:</h4>
+        <ul>
+          <li>✅ Automatic animation direction detection</li>
+          <li>✅ Side page slides from the correct side based on layout direction</li>
+          <li>✅ Text alignment adapts to RTL</li>
+          <li>✅ No additional configuration needed</li>
+        </ul>
+
+        <div class="global-toggle-info">
+          <h4>🔄 Try the Global Toggle:</h4>
+          <p>Use the floating toggle button in the bottom-right corner to switch between LTR and RTL modes. All side page demos will automatically adapt!</p>
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h4>How it works:</h4>
+        <pre><code>// The library automatically detects RTL direction
+const direction = getComputedStyle(document.documentElement).direction;
+
+// And adjusts animations accordingly
+// In RTL: 'end' position becomes left side
+// In LTR: 'end' position becomes right side
+
+// Your code remains the same:
+const ref = sidePageService.openSidePage(
+  'rtl-demo',
+  YourComponent,
+  &#123;
+    position: 'end', // Automatically adapts to RTL/LTR
+    width: '500px'
+  &#125;
+);</code></pre>
+      </div>
+
+      <div class="rtl-content">
+        <h4>محتوى عربي (Arabic Content)</h4>
+        <p>هذا مثال على النص العربي في اللوحة الجانبية. يتم محاذاة النص تلقائياً من اليمين إلى اليسار.</p>
+        
+        <h4>فارسی (Persian Content)</h4>
+        <p>این نمونه‌ای از متن فارسی در پانل کناری است. متن به طور خودکار از راست به چپ تراز می‌شود.</p>
+      </div>
+
+      <div class="demo-actions">
+        <button class="btn" (click)="closeWithResult('RTL demo completed')">
+          بستن پنل (Close Panel)
+        </button>
+      </div>
+    </div>
+
+    <!-- Z-Index Test Demo -->
+    <div *ngIf="data.type === 'zindex'" class="demo-section zindex-demo">
+      <div class="zindex-info">
+        <h3>🔍 Z-Index Testing</h3>
+        <p>This side page demonstrates custom z-index control. Current z-index: <strong>1200</strong></p>
+      </div>
+
+      <div class="zindex-features">
+        <h4>Z-Index Features:</h4>
+        <ul>
+          <li>✅ Custom z-index per side page</li>
+          <li>✅ Automatic overlay z-index management</li>
+          <li>✅ Multiple layered side pages</li>
+          <li>✅ Proper stacking order</li>
+        </ul>
+      </div>
+
+      <div class="zindex-test">
+        <h4>Test Higher Z-Index Layer:</h4>
+        <p>Click the button below to open another side page with z-index: 1500</p>
+        <button class="btn zindex-btn" (click)="openHigherLayer()">
+          Open Higher Layer (z-index: 1500)
+        </button>
+      </div>
+
+      <div class="code-example">
+        <h4>Code Example:</h4>
+        <pre><code>// Lower z-index side page
+const ref1 = sidePageService.openSidePage('layer1', Component, &#123;
+  zIndex: 1200,
+  width: '400px'
+&#125;);
+
+// Higher z-index side page (appears on top)
+const ref2 = sidePageService.openSidePage('layer2', Component, &#123;
+  zIndex: 1500,
+  width: '350px',
+  position: 'start'
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Higher Z-Index Demo -->
+    <div *ngIf="data.type === 'zindex-high'" class="demo-section zindex-demo">
+      <div class="zindex-info high-layer">
+        <h3>⬆️ Higher Z-Index Layer</h3>
+        <p>This side page has z-index: <strong>1500</strong> and appears above the previous one.</p>
+      </div>
+
+      <div class="layer-info">
+        <h4>Layer Stacking:</h4>
+        <div class="stack-visualization">
+          <div class="stack-item active">Layer 2 (z-index: 1500) ← You are here</div>
+          <div class="stack-item">Layer 1 (z-index: 1200)</div>
+          <div class="stack-item">Overlay (z-index: 1199)</div>
+        </div>
+      </div>
+
+      <div class="demo-actions">
+        <button class="btn" (click)="closeWithResult('Higher z-index demo completed')">
+          Close This Layer
+        </button>
+      </div>
+    </div>
+
+    <!-- Disable Close Demo -->
+    <div *ngIf="data.type === 'disable-close'" class="demo-section disable-close-demo">
+      <div class="warning-banner">
+        <h3>⚠️ Close Protection Enabled</h3>
+        <p>This side page has <code>disableClose: true</code> set, which means:</p>
+        <ul>
+          <li>❌ Clicking outside (backdrop) will NOT close this panel</li>
+          <li>❌ Pressing ESC key will NOT close this panel</li>
+          <li>✅ You must use the close button or programmatic close methods</li>
+        </ul>
+      </div>
+
+      <div class="demo-content">
+        <h4>Configuration:</h4>
+        <div class="code-example">
+          <pre><code>const ref = sidePageService.openSidePage(
+  'disable-close-demo',
+  YourComponent,
+  &#123;
+    disableClose: true, // Prevents backdrop/ESC close
+    width: '400px',
+    data: &#123;
+      title: 'Protected Side Page',
+      type: 'disable-close'
+    &#125;
+  &#125;
+);</code></pre>
+        </div>
+
+        <div class="test-instructions">
+          <h4>🧪 Test it out:</h4>
+          <ol>
+            <li>Try clicking outside this panel (on the dark backdrop)</li>
+            <li>Try pressing the ESC key</li>
+            <li>Notice that the panel stays open</li>
+            <li>Use the button below to close it properly</li>
+          </ol>
+        </div>
+
+        <div class="use-cases">
+          <h4>💡 Use Cases:</h4>
+          <ul>
+            <li><strong>Forms with unsaved changes:</strong> Prevent accidental data loss</li>
+            <li><strong>Critical confirmations:</strong> Force user to make a deliberate choice</li>
+            <li><strong>Wizard steps:</strong> Ensure users complete all required steps</li>
+            <li><strong>Payment flows:</strong> Prevent interruption during sensitive operations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="demo-actions">
+        <button class="btn primary" (click)="closeWithResult('Disable close demo completed')">
+          ✅ Close Side Page (Only way to close)
+        </button>
+      </div>
+    </div>
   </div>
 </div>

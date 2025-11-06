@@ -363,3 +363,59 @@
     gap: 10px;
   }
 }
+
+// Floating Direction Toggle Button
+.direction-toggle-float {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  z-index: 1000;
+
+  .direction-toggle-btn {
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(74, 108, 247, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 180px;
+    justify-content: center;
+    
+    &:hover {
+      background: #3b5bdb;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 18px rgba(74, 108, 247, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    .direction-icon {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .direction-text {
+      font-size: 13px;
+      font-weight: 500;
+    }
+  }
+}
+
+// RTL-specific adjustments for the floating button
+:host-context([dir="rtl"]) {
+  .direction-toggle-float {
+    right: auto;
+    left: 30px;
+    transform: translateY(-50%);
+  }
+}
