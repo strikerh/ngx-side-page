@@ -11,7 +11,9 @@
     "watch-lib": " ng build ngx-side-page --watch",
     "create-link": "cd dist/ngx-side-page && npm link",
     "remove-link": "npm unlink ngx-side-page",
-    "install-link": "cd projects/ngx-side-page-demo && npm link ngx-side-page"
+    "install-link": "cd projects/ngx-side-page-demo && npm link ngx-side-page",
+    "build-demo": "ng build ngx-side-page && ng build ngx-side-page-demo --configuration github-pages",
+    "build-demo-local": "ng build ngx-side-page && ng build ngx-side-page-demo --configuration production"
   },
   "private": true,
   "dependencies": {

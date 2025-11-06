@@ -1,6 +1,17 @@
 # ngx-side-page
 
+[![npm version](https://badge.fury.io/js/ngx-side-page.svg)](https://badge.fury.io/js/ngx-side-page)
+[![npm downloads](https://img.shields.io/npm/dm/ngx-side-page.svg)](https://www.npmjs.com/package/ngx-side-page)
+[![GitHub](https://img.shields.io/github/license/strikerh/ngx-side-page)](https://github.com/strikerh/ngx-side-page/blob/master/LICENSE)
+
 A versatile Angular library for creating and managing side pages (slide-out panels) with ease. This library provides a service-based approach to display components in slide-out panels with smooth animations, similar to Angular Material's dialog system but specifically designed for side panels.
+
+## Links
+
+- 📦 [NPM Package](https://www.npmjs.com/package/ngx-side-page)
+- 🔗 [GitHub Repository](https://github.com/strikerh/ngx-side-page)
+- � [Live Demo](https://strikerh.github.io/ngx-side-page/)
+- �📖 [Documentation](https://github.com/strikerh/ngx-side-page#readme)
 
 ## Features
 
@@ -399,7 +410,26 @@ The library automatically detects RTL direction from `document.documentElement` 
 
 Contributions are welcome! Please read our contributing guidelines and submit pull requests to our GitHub repository.
 
+- 🐛 [Report Issues](https://github.com/strikerh/ngx-side-page/issues)
+- 💡 [Request Features](https://github.com/strikerh/ngx-side-page/issues/new?template=feature_request.md)
+- 🔀 [Submit Pull Requests](https://github.com/strikerh/ngx-side-page/pulls)
+
+## Repository
+
+- **GitHub**: [https://github.com/strikerh/ngx-side-page](https://github.com/strikerh/ngx-side-page)
+- **NPM**: [https://www.npmjs.com/package/ngx-side-page](https://www.npmjs.com/package/ngx-side-page)
+- **Author**: Hazem Safwat
+- **License**: MIT
+
+## Installation
+
+```bash
+npm install ngx-side-page
+```
+
 ## License
+
+MIT License - see the [LICENSE](https://github.com/strikerh/ngx-side-page/blob/master/LICENSE) file for details.
 
 MIT License - see LICENSE file for details.
 

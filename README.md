@@ -1,5 +1,21 @@
 # NgxSidePageWorkspace
 
+[![npm version](https://badge.fury.io/js/ngx-side-page.svg)](https://badge.fury.io/js/ngx-side-page)
+[![GitHub](https://img.shields.io/github/license/strikerh/ngx-side-page)](https://github.com/strikerh/ngx-side-page/blob/master/LICENSE)
+
+This project contains the **ngx-side-page** Angular library and its demo application.
+
+## 📦 NPM Package
+
+- **Package**: [ngx-side-page](https://www.npmjs.com/package/ngx-side-page)
+- **Repository**: [GitHub](https://github.com/strikerh/ngx-side-page)
+- **Live Demo**: [https://strikerh.github.io/ngx-side-page/](https://strikerh.github.io/ngx-side-page/)
+
+## Projects Structure
+
+- `projects/ngx-side-page/` - The main library
+- `projects/ngx-side-page-demo/` - Demo application for testing and examples
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
 
 ## Development server
@@ -34,7 +50,29 @@ To build the project run:
 ng build
 ```
 
+To build the library specifically:
+
+```bash
+ng build ngx-side-page
+```
+
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Publishing the Library
+
+To publish the ngx-side-page library:
+
+```bash
+npm run publish-lib
+```
+
+Or manually:
+
+```bash
+ng build ngx-side-page
+cd dist/ngx-side-page
+npm publish
+```
 
 ## Running unit tests
 

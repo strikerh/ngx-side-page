@@ -5,3 +5,5 @@
 export * from './lib/side-page.service';
 export * from './lib/side-page.component';
 export * from './lib/side-page-data.token';
+export * from './lib/side-page-config.token';
+export * from './lib/side-page.providers';

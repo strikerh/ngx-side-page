@@ -91,4 +91,4 @@ This release focuses on improving user experience and developer productivity wit
 
 ---
 
-*For more information, visit our [GitHub repository](https://github.com/yourusername/ngx-side-page) or check out the [demo application](https://your-demo-url.com).*
+*For more information, visit our [GitHub repository](https://github.com/strikerh/ngx-side-page) or check out the [demo application](https://your-demo-url.com).*
