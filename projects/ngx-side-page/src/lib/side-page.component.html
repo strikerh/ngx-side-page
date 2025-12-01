@@ -20,7 +20,7 @@
         'min-width': sidePage.options.minWidth || '200px',
         'max-width': sidePage.options.maxWidth || '500px',
         'width': sidePage.options.width || '100%',
-        'z-index': sidePage.options.zIndex || 1000
+        'z-index': sidePage.options.zIndex?  sidePage.options.zIndex -1: 1000-1
       }"
       [@slideInOut]="{ value: true, params: { direction: getAnimationDirection('end') } }"
       [sidePage]="sidePage"></lib-page>
